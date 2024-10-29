@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+    >
+<f:view>
+    <h:head>
+        <title>Universidad Nacional - SGE</title>
+        <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+        <meta http-equiv="Content-Type" content="text/html" charset="utf-8"/>
+    </h:head>
+    <h:body>
+        <div id="wrapper" style="width: 90%;margin: 0 auto;">
+           <div id="headerPage">
+                <div> <!--Encabezado-->
+                    <p:panelGrid id="header" style="width: 100%;">
+                        <p:row>
+                            <p:column style="width: 70%;margin: 0px auto;border: none;">
+                                <h:graphicImage library="images" name="una.png" style="width: 100px;display: block;margin-left:15px;"/>
+                            </p:column>
+                            <p:column style="width: 30%;border: none;">
+                                <h2 style="display: block;margin-right: 10px;">Sistema de Gestión Educativa</h2>
+                            </p:column>
+                        </p:row>
+                    </p:panelGrid>
+                </div>
+               <div> <!--Inicio Menu-->
+                    <h:form>
+                        <p:menubar>
+                            <p:submenu label="Estudiantes">
+                                <p:menuitem value="Listar" action="/student/list-students?faces-redirect=true"/>
+                                <p:menuitem value="Nuevo" action="/student/add-student?faces-redirect=true"/>
+                            </p:submenu>
+                            <p:submenu label="Profesores">
+                                <p:menuitem value="Listar" action="/professor/list-professors?faces-redirect=true"/>
+                                <p:menuitem value="Nuevo" action="/professor/add-professor?faces-redirect=true"/>
+                            </p:submenu>
+                            <p:submenu label="Cursos">
+                                <p:menuitem value="Listar" action="/course/list-courses?faces-redirect=true"/>
+                                <p:menuitem value="Nuevo" action="/course/add-course?faces-redirect=true"/>
+                            </p:submenu>
+                            <p:submenu label="Matricula">
+                                <p:menuitem value="Matricular" action="/enrollment/enroll?faces-redirect=true"/>
+                                <p:menuitem value="Registrar notas" action="/enrollment/grades?faces-redirect=true"/>
+                            </p:submenu>
+                            <p:submenu label="Informes" rendered="#{userLogged.admin}">
+                                <p:menuitem value="Estudiantes por curso" action="/reports/students-by-course?faces-redirect=true"/>
+                                <p:menuitem value="Cursos matriculados" action="/reports/enrolled-courses?faces-redirect=true"/>
+                                <p:menuitem value="Cursos por profesor" action="/reports/courses-by-professor?faces-redirect=true"/>
+                            </p:submenu>
+
+                            <f:facet name="options">
+                                <p:commandLink value="#{userLogged.username}" action="#{userController.logout()}"/>
+                            </f:facet>
+                        </p:menubar>
+                    </h:form>
+               </div> <!--Fin Menu-->
+           </div>
+            <div id="contentPage"> <!--Inicia el contenido-->
+                <p:panelGrid id="content" style="width: 100%">
+                    <p:row style="height: 400px;">
+                        <p:column style="width: 100%;margin: 0px auto;border: none">
+                            <h:graphicImage library="images" name="una-horizontal.png" style="width: 300px;display: block; margin: 0 auto;"/>
+                        </p:column>
+                    </p:row>
+            </p:panelGrid>
+            </div> <!--fin del contenido-->
+            <div id="footerPage">
+                <hr/>
+                <p>&copy;2024 Universidad Nacional. Todos los derechos reservados</p>
+            </div>
+        </div>
+    </h:body>
+</f:view>
+</html>
