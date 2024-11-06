@@ -8,7 +8,7 @@ import java.util.List;
 
 public class AgenteService extends Service<Agente> {
 
-    private static final String persistence = "my_persistence";
+    private static final String persistence = "my_persistence_unit";
 
     @Override
     public List<Agente> getAll() throws Exception {
