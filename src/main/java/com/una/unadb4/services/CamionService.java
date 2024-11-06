@@ -7,14 +7,14 @@ import jakarta.transaction.Transactional;
 
 import java.util.List;
 
-public class CamionService {
+public class CamionService extends Service<Camion> {
 
     // Nombre de la unidad de persistencia definida en persistence.xml
-    private static final String PERSISTENCE_UNIT_NAME = "my_persistence_unit";
+    private static final String persistence = "my_persistence_unit";
 
-    // Método para obtener todos los camiones
+    @Override
     public List<Camion> getAll() throws Exception {
-        EntityManager em = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME).createEntityManager();
+        EntityManager em = Persistence.createEntityManagerFactory(persistence).createEntityManager();
         try {
             em.getTransaction().begin();
             List<Camion> camiones = em.createQuery("SELECT c FROM camiones c", Camion.class).getResultList();
@@ -28,9 +28,9 @@ public class CamionService {
         }
     }
 
-    // Método para obtener un camión por su ID
+    @Override
     public Camion getById(int id) throws Exception {
-        EntityManager em = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME).createEntityManager();
+        EntityManager em = Persistence.createEntityManagerFactory(persistence).createEntityManager();
         try {
             return em.find(Camion.class, id);
         } finally {
@@ -41,7 +41,7 @@ public class CamionService {
     // Método para almacenar un nuevo camión en la base de datos
     @Transactional
     public void store(Camion camion) throws Exception {
-        EntityManager em = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME).createEntityManager();
+        EntityManager em = Persistence.createEntityManagerFactory(persistence).createEntityManager();
         try {
             em.getTransaction().begin();
             em.persist(camion);
@@ -54,10 +54,9 @@ public class CamionService {
         }
     }
 
-    // Método para actualizar un camión existente
-    @Transactional
+    @Override
     public void update(Camion camion) throws Exception {
-        EntityManager em = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME).createEntityManager();
+        EntityManager em = Persistence.createEntityManagerFactory(persistence).createEntityManager();
         try {
             em.getTransaction().begin();
             em.merge(camion);
@@ -70,10 +69,9 @@ public class CamionService {
         }
     }
 
-    // Método para eliminar un camión por su ID
-    @Transactional
+    @Override
     public void delete(int id) throws Exception {
-        EntityManager em = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME).createEntityManager();
+        EntityManager em = Persistence.createEntityManagerFactory(persistence).createEntityManager();
         try {
             em.getTransaction().begin();
             Camion camion = em.find(Camion.class, id);

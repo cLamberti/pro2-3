@@ -7,14 +7,13 @@ import jakarta.transaction.Transactional;
 
 import java.util.List;
 
-public class RemesaService {
+public class RemesaService extends Service<Remesa> {
 
-    // Nombre de la unidad de persistencia definida en persistence.xml
-    private static final String PERSISTENCE_UNIT_NAME = "my_persistence";
+    private static final String persistence = "my_persistence_unit";
 
-    // Método para obtener todas las remesas
+    @Override
     public List<Remesa> getAll() throws Exception {
-        EntityManager em = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME).createEntityManager();
+        EntityManager em = Persistence.createEntityManagerFactory(persistence).createEntityManager();
         try {
             em.getTransaction().begin();
             List<Remesa> remesas = em.createQuery("SELECT r FROM remesas r", Remesa.class).getResultList();
@@ -28,9 +27,9 @@ public class RemesaService {
         }
     }
 
-    // Método para obtener una remesa por su ID
+    @Override
     public Remesa getById(int id) throws Exception {
-        EntityManager em = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME).createEntityManager();
+        EntityManager em = Persistence.createEntityManagerFactory(persistence).createEntityManager();
         try {
             return em.find(Remesa.class, id);
         } finally {
@@ -38,10 +37,9 @@ public class RemesaService {
         }
     }
 
-    // Método para almacenar una nueva remesa en la base de datos
-    @Transactional
+    @Override
     public void store(Remesa remesa) throws Exception {
-        EntityManager em = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME).createEntityManager();
+        EntityManager em = Persistence.createEntityManagerFactory(persistence).createEntityManager();
         try {
             em.getTransaction().begin();
             em.persist(remesa);
@@ -54,10 +52,9 @@ public class RemesaService {
         }
     }
 
-    // Método para actualizar una remesa existente
-    @Transactional
+    @Override
     public void update(Remesa remesa) throws Exception {
-        EntityManager em = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME).createEntityManager();
+        EntityManager em = Persistence.createEntityManagerFactory(persistence).createEntityManager();
         try {
             em.getTransaction().begin();
             em.merge(remesa);
@@ -70,10 +67,9 @@ public class RemesaService {
         }
     }
 
-    // Método para eliminar una remesa por su ID
-    @Transactional
+    @Override
     public void delete(int id) throws Exception {
-        EntityManager em = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME).createEntityManager();
+        EntityManager em = Persistence.createEntityManagerFactory(persistence).createEntityManager();
         try {
             em.getTransaction().begin();
             Remesa remesa = em.find(Remesa.class, id);

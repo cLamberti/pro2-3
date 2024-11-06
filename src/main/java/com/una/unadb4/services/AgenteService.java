@@ -68,11 +68,6 @@ public class AgenteService extends Service<Agente> {
     }
 
     @Override
-    public void delete(Integer id) throws Exception {
-
-    }
-
-    @Override
     public void update(Agente agent) throws Exception {
         EntityManager em = Persistence.createEntityManagerFactory(persistence).createEntityManager();
         try {
