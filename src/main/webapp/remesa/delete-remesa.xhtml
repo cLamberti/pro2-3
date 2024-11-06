@@ -6,8 +6,9 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 <f:view>
+    <f:event type="preRenderView" listener="#{remesaController.loadRemesa()}"/>
     <h:head>
-        <title>Sistema de Gestión de Remesas</title>
+        <title>Eliminar Remesa - SGE</title>
         <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
         <meta http-equiv="Content-Type" content="text/html" charset="utf-8"/>
     </h:head>
@@ -59,13 +60,25 @@
                 </div> <!--Fin Menu-->
             </div>
             <div id="contentPage"> <!--Inicia el contenido-->
-                <p:panelGrid id="content" style="width: 100%">
-                    <p:row style="height: 400px;">
-                        <p:column style="width: 100%;margin: 0px auto;border: none">
-                            <h:graphicImage library="images" name="una-horizontal.png" style="width: 300px;display: block; margin: 0 auto;"/>
-                        </p:column>
-                    </p:row>
-                </p:panelGrid>
+                <h4>Eliminar Remesa</h4>
+                <h:form id="deleteForm" style="width: 80%;margin: 5px auto">
+                    <p:growl id="msg" life="3000" showDetail="true"/>
+                    <p:panel header="¿Estás seguro de que deseas eliminar esta remesa?">
+                        <p:outputLabel value="ID: #{remesaController.remesa.id}" style="display: block; margin-top: 10px;"/>
+                        <p:outputLabel value="Tipo: #{remesaController.remesa.type}" style="display: block;"/>
+                        <p:outputLabel value="Fecha: #{remesaController.remesa.date}" style="display: block;"/>
+                        <p:outputLabel value="Hora: #{remesaController.remesa.time}" style="display: block;"/>
+                        <p:outputLabel value="Estado: #{remesaController.remesa.status}" style="display: block;"/>
+                        <p:outputLabel value="Camión: #{remesaController.remesa.camion.licensePlate}" style="display: block;"/>
+                        <p:outputLabel value="Agente: #{remesaController.remesa.agente.name}" style="display: block;"/>
+                        <p:separator/>
+                        <p:panelGrid columns="2" style="margin-top: 20px;">
+                            <p:commandButton value="Eliminar" icon="pi pi-check" styleClass="ui-button-danger"
+                                             action="#{remesaController.deleteRemesa(remesaController.remesa.id)}" update="msg"/>
+                            <p:commandButton value="Cancelar" icon="pi pi-times" onclick="window.history.back();" styleClass="ui-button-secondary"/>
+                        </p:panelGrid>
+                    </p:panel>
+                </h:form>
             </div> <!--fin del contenido-->
             <div id="footerPage">
                 <hr/>

@@ -6,8 +6,9 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 <f:view>
+    <f:event type="preRenderView" listener="#{remesaController.loadRemesas()}"/>
     <h:head>
-        <title>Sistema de Gestión de Remesas</title>
+        <title>Lista de Remesas - SGE</title>
         <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
         <meta http-equiv="Content-Type" content="text/html" charset="utf-8"/>
     </h:head>
@@ -59,13 +60,40 @@
                 </div> <!--Fin Menu-->
             </div>
             <div id="contentPage"> <!--Inicia el contenido-->
-                <p:panelGrid id="content" style="width: 100%">
-                    <p:row style="height: 400px;">
-                        <p:column style="width: 100%;margin: 0px auto;border: none">
-                            <h:graphicImage library="images" name="una-horizontal.png" style="width: 300px;display: block; margin: 0 auto;"/>
-                        </p:column>
-                    </p:row>
-                </p:panelGrid>
+                <p:growl id="msg" showDetail="true" life="3000"/>
+                <h3>Lista de Remesas</h3>
+                <p:dataTable id="tbRemesas" value="#{remesaController.remesas}" var="rem">
+                    <p:column headerText="ID">
+                        <h:outputText value="#{rem.id}"/>
+                    </p:column>
+                    <p:column headerText="Tipo">
+                        <h:outputText value="#{rem.type}"/>
+                    </p:column>
+                    <p:column headerText="Fecha">
+                        <h:outputText value="#{rem.date}"/>
+                    </p:column>
+                    <p:column headerText="Hora">
+                        <h:outputText value="#{rem.time}"/>
+                    </p:column>
+                    <p:column headerText="Estado">
+                        <h:outputText value="#{rem.status}"/>
+                    </p:column>
+                    <p:column headerText="Camión">
+                        <h:outputText value="#{rem.camion.licensePlate}"/>
+                    </p:column>
+                    <p:column headerText="Agente">
+                        <h:outputText value="#{rem.agente.name}"/>
+                    </p:column>
+                    <p:column headerText="Acciones">
+                        <h:form>
+                            <p:linkButton icon="fa fa-edit" outcome="/remesa/update-remesa">
+                                <f:param name="id" value="#{rem.id}"/>
+                            </p:linkButton>
+                            ||
+                            <p:commandButton icon="fa fa-trash" action="#{remesaController.deleteRemesa(rem.id)}" update="msg"/>
+                        </h:form>
+                    </p:column>
+                </p:dataTable>
             </div> <!--fin del contenido-->
             <div id="footerPage">
                 <hr/>

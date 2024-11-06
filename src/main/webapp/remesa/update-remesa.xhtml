@@ -6,8 +6,9 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 <f:view>
+    <f:event type="preRenderView" listener="#{remesaController.loadRemesa()}"/>
     <h:head>
-        <title>Sistema de Gestión de Remesas</title>
+        <title>Actualizar Remesa - SGE</title>
         <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
         <meta http-equiv="Content-Type" content="text/html" charset="utf-8"/>
     </h:head>
@@ -59,13 +60,56 @@
                 </div> <!--Fin Menu-->
             </div>
             <div id="contentPage"> <!--Inicia el contenido-->
-                <p:panelGrid id="content" style="width: 100%">
-                    <p:row style="height: 400px;">
-                        <p:column style="width: 100%;margin: 0px auto;border: none">
-                            <h:graphicImage library="images" name="una-horizontal.png" style="width: 300px;display: block; margin: 0 auto;"/>
-                        </p:column>
-                    </p:row>
-                </p:panelGrid>
+                <h4>Actualización de Remesa</h4>
+                <h:form id="updateForm" style="width: 80%;margin: 5px auto">
+                    <p:growl id="msg" life="3000" showDetail="true"/>
+                    <div class="ui-fluid p-formgrid p-grid">
+                        <div class="p-field p-col-12">
+                            <p:outputLabel value="Identificación" for="id"/>
+                            <p:inputText id="id" value="#{remesaController.remesa.id}" disabled="true"/>
+                        </div>
+                        <div class="p-field p-col-12">
+                            <p:outputLabel value="Tipo" for="type"/>
+                            <p:inputText id="type" value="#{remesaController.remesa.type}" required="true" requiredMessage="Campo obligatorio"/>
+                            <h:message for="type"/>
+                        </div>
+                        <div class="p-field p-col-12">
+                            <p:outputLabel value="Fecha" for="date"/>
+                            <p:inputText id="date" value="#{remesaController.remesa.date}" required="true" requiredMessage="Campo obligatorio"/>
+                            <h:message for="date"/>
+                        </div>
+                        <div class="p-field p-col-12">
+                            <p:outputLabel value="Hora" for="time"/>
+                            <p:inputText id="time" value="#{remesaController.remesa.time}" required="true" requiredMessage="Campo obligatorio"/>
+                            <h:message for="time"/>
+                        </div>
+                        <div class="p-field p-col-12">
+                            <p:outputLabel value="Estado" for="status"/>
+                            <p:inputText id="status" value="#{remesaController.remesa.status}" required="true" requiredMessage="Campo obligatorio"/>
+                            <h:message for="status"/>
+                        </div>
+                        <div class="p-field p-col-12">
+                            <p:outputLabel value="Camión" for="camion"/>
+                            <p:inputText id="camion" value="#{remesaController.remesa.camion.licensePlate}" required="true" requiredMessage="Campo obligatorio"/>
+                            <h:message for="camion"/>
+                        </div>
+                        <div class="p-field p-col-12">
+                            <p:outputLabel value="Agente" for="agente"/>
+                            <p:inputText id="agente" value="#{remesaController.remesa.agente.name}" required="true" requiredMessage="Campo obligatorio"/>
+                            <h:message for="agente"/>
+                        </div>
+                        <p:panelGrid id="btnPanel" style="width: 100%">
+                            <p:row>
+                                <p:column style="width: 45%;border: none"/>
+                                <p:column style="width: 10%;border: none">
+                                    <p:commandButton value="Guardar" styleClass="ui-button blue-bg"
+                                                     action="#{remesaController.updateRemesa()}" update="msg"/>
+                                </p:column>
+                                <p:column style="width: 45%;border: none"/>
+                            </p:row>
+                        </p:panelGrid>
+                    </div>
+                </h:form>
             </div> <!--fin del contenido-->
             <div id="footerPage">
                 <hr/>

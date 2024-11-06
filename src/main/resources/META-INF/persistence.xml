@@ -5,6 +5,10 @@
         <class>com.una.unadb4.models.Student</class>
         <class>com.una.unadb4.models.Professor</class>
         <class>com.una.unadb4.models.Course</class>
+        <class>com.una.unadb4.models.Camion</class>
+        <class>com.una.unadb4.models.Remesa</class>
+        <class>com.una.unadb4.models.Empresa</class>
+        <class>com.una.unadb4.models.Agente</class>
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
         <properties>
             <property name="jakarta.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/unadb"/>
