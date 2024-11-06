@@ -6,9 +6,10 @@ import jakarta.enterprise.inject.Model;
 import jakarta.faces.application.FacesMessage;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.view.ViewScoped;
-import jakarta.inject.Named;
+import org.primefaces.model.file.UploadedFile;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -16,85 +17,60 @@ import java.util.logging.Logger;
 @Model
 @ViewScoped
 public class AgenteController implements Serializable {
-
-    private Agente agent; // Agente actual en el formulario
-    private List<Agente> agents; // Lista de todos los agentes
-    private final AgenteService agentService; // Servicio para operaciones CRUD
-    private final Logger logger;
+    private List<Agente> agentes;
+    private AgenteService agenteService;
+    private Agente newAgente;
+    private Logger logger;
+    private UploadedFile file;
 
     public AgenteController() {
-        this.agentService = new AgenteService();
-        this.agent = new Agente();
+        this.agentes = new ArrayList();
+        this.agenteService = new AgenteService();
         this.logger = Logger.getLogger(this.getClass().getName());
-        loadAgents(); // Carga inicial de todos los agentes
+        this.newAgente = new Agente();
+    }
+    private void addMessage(String message) {
+        FacesMessage msg = new FacesMessage( message);
+        FacesContext.getCurrentInstance().addMessage(null,msg);
+    }
+    public void loadAgentes() {
+        logger.info("Loading agentes...");
+        this.agentes.clear();
+        try {
+            this.agentes = agenteService.getAll();
+        } catch (Exception e) {
+            logger.log(Level.WARNING, e.getMessage(), e);
+            this.addMessage(e.getMessage());
+        }
+    }
+    public void setFile(UploadedFile file) {
+        this.file = file;
     }
 
-    // Método para cargar todos los agentes desde la base de datos
-    public void loadAgents() {
-        try {
-            this.agents = agentService.getAll();
-        } catch (Exception e) {
-            logger.log(Level.SEVERE, "Error al cargar los agentes", e);
-            addMessage(FacesMessage.SEVERITY_ERROR, "Error", "No se pudieron cargar los agentes.");
+    public void uploadFile () {
+        if (file != null) {
+            try {
+                newAgente.setPhoto(file.getContent());
+                FacesContext.getCurrentInstance().addMessage(null,new FacesMessage("Archivo subido"));
+            } catch (Exception e) {
+                FacesContext.getCurrentInstance().addMessage(null,new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error al subir el archivo", ""));
+            }
+        } else {
+            FacesContext.getCurrentInstance().addMessage(null,new FacesMessage("Archivo no encontrado"));
         }
     }
 
-    // Método para guardar un nuevo agente
-    public void saveAgent() {
+    public String addAgente() {
+        logger.info("Adding new agente: " + newAgente.getName());
         try {
-            agentService.store(agent);
-            addMessage(FacesMessage.SEVERITY_INFO, "Éxito", "Agente guardado correctamente.");
-            this.agent = new Agente(); // Reinicia el formulario
-            loadAgents(); // Recarga la lista de agentes
+            agenteService.store(newAgente);
+            addMessage("Agente guardado exitosamente");
+            newAgente = new Agente();
+            return "/agente/add-agente.xhtml?faces-redirect=true";
         } catch (Exception e) {
-            logger.log(Level.SEVERE, "Error al guardar el agente", e);
-            addMessage(FacesMessage.SEVERITY_ERROR, "Error", "No se pudo guardar el agente.");
+            logger.log(Level.WARNING, "Error al agregar el agente: {0}", e.getMessage());
+            addMessage("Error al agregar el agente.");
+            return null;
         }
-    }
-
-    // Método para actualizar un agente existente
-    public void updateAgent() {
-        try {
-            agentService.update(agent);
-            addMessage(FacesMessage.SEVERITY_INFO, "Éxito", "Agente actualizado correctamente.");
-            loadAgents(); // Recarga la lista de agentes
-        } catch (Exception e) {
-            logger.log(Level.SEVERE, "Error al actualizar el agente", e);
-            addMessage(FacesMessage.SEVERITY_ERROR, "Error", "No se pudo actualizar el agente.");
-        }
-    }
-
-    // Método para eliminar un agente por su ID
-    public void deleteAgent(int id) {
-        try {
-            agentService.delete(id);
-            addMessage(FacesMessage.SEVERITY_INFO, "Éxito", "Agente eliminado correctamente.");
-            loadAgents(); // Recarga la lista de agentes
-        } catch (Exception e) {
-            logger.log(Level.SEVERE, "Error al eliminar el agente", e);
-            addMessage(FacesMessage.SEVERITY_ERROR, "Error", "No se pudo eliminar el agente.");
-        }
-    }
-
-    // Método para mostrar mensajes en la interfaz
-    private void addMessage(FacesMessage.Severity severity, String summary, String detail) {
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(severity, summary, detail));
-    }
-
-    // Getters y Setters
-    public Agente getAgent() {
-        return agent;
-    }
-
-    public void setAgente(Agente agent) {
-        this.agent = agent;
-    }
-
-    public List<Agente> getAgents() {
-        return agents;
-    }
-
-    public void setAgents(List<Agente> agents) {
-        this.agents = agents;
     }
 }

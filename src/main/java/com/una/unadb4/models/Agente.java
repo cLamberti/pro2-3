@@ -17,13 +17,16 @@ public class Agente implements Serializable {
     private String name;
 
     @Column(name = "apellidos")
-    private String surname;
+    private String lastname;
 
     @Column(name = "tipo_agente")
     private String agentType; // "Conductor" o "Escolta"
 
-    @Column(name = "foto")
+    @Column(name = "foto",nullable = true)
     private byte[] photo; // Se almacenará la fotografía en la base de datos como un blob
+
+    @Column(name="nombre_foto",nullable = true)
+    private String filename;
 
     // Getters y Setters
     public String getId() {
@@ -42,12 +45,12 @@ public class Agente implements Serializable {
         this.name = name;
     }
 
-    public String getSurname() {
-        return surname;
+    public String getLastname() {
+        return lastname;
     }
 
-    public void setSurname(String surname) {
-        this.surname = surname;
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
     }
 
     public String getAgentType() {
@@ -64,5 +67,12 @@ public class Agente implements Serializable {
 
     public void setPhoto(byte[] photo) {
         this.photo = photo;
+    }
+
+    public String getFilename() {
+        return filename;
+    }
+    public void setFilename(String filename) {
+        this.filename = filename;
     }
 }

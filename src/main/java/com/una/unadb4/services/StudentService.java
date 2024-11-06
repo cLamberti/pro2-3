@@ -45,6 +45,11 @@ public class StudentService extends Service<Student> {
     }
 
     @Override
+    public void delete(int id) throws Exception {
+
+    }
+
+    @Override
     public void delete(Integer id) throws Exception {
 
     }

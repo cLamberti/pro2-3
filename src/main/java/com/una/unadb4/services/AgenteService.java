@@ -3,34 +3,30 @@ package com.una.unadb4.services;
 import com.una.unadb4.models.Agente;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.Persistence;
-import jakarta.transaction.Transactional;
 
 import java.util.List;
 
-public class AgenteService {
+public class AgenteService extends Service<Agente> {
 
-    // Nombre de la unidad de persistencia definida en persistence.xml
-    private static final String PERSISTENCE_UNIT_NAME = "my_persistence";
+    private static final String persistence = "my_persistence";
 
-    // Método para obtener todos los agentes
+    @Override
     public List<Agente> getAll() throws Exception {
-        EntityManager em = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME).createEntityManager();
+        EntityManager em = Persistence.createEntityManagerFactory(persistence).createEntityManager();
         try {
             em.getTransaction().begin();
-            List<Agente> agents = em.createQuery("SELECT a FROM agentes a", Agente.class).getResultList();
-            em.getTransaction().commit();
+            List<Agente> agents = em.createQuery("SELECT a FROM agentes a").getResultList();
+            em.close();
             return agents;
         } catch (Exception e) {
-            em.getTransaction().rollback();
-            throw e;
-        } finally {
             em.close();
+            throw e;
         }
     }
 
-    // Método para obtener un agente por su ID
+    @Override
     public Agente getById(int id) throws Exception {
-        EntityManager em = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME).createEntityManager();
+        EntityManager em = Persistence.createEntityManagerFactory(persistence).createEntityManager();
         try {
             return em.find(Agente.class, id);
         } finally {
@@ -38,10 +34,9 @@ public class AgenteService {
         }
     }
 
-    // Método para almacenar un nuevo agente en la base de datos
-    @Transactional
+    @Override
     public void store(Agente agent) throws Exception {
-        EntityManager em = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME).createEntityManager();
+        EntityManager em = Persistence.createEntityManagerFactory(persistence).createEntityManager();
         try {
             em.getTransaction().begin();
             em.persist(agent);
@@ -54,13 +49,15 @@ public class AgenteService {
         }
     }
 
-    // Método para actualizar un agente existente
-    @Transactional
-    public void update(Agente agent) throws Exception {
-        EntityManager em = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME).createEntityManager();
+    @Override
+    public void delete(int id) throws Exception {
+        EntityManager em = Persistence.createEntityManagerFactory(persistence).createEntityManager();
         try {
             em.getTransaction().begin();
-            em.merge(agent);
+            Agente agent = em.find(Agente.class, id);
+            if (agent != null) {
+                em.remove(agent);
+            }
             em.getTransaction().commit();
         } catch (Exception e) {
             em.getTransaction().rollback();
@@ -70,16 +67,17 @@ public class AgenteService {
         }
     }
 
-    // Método para eliminar un agente por su ID
-    @Transactional
-    public void delete(int id) throws Exception {
-        EntityManager em = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME).createEntityManager();
+    @Override
+    public void delete(Integer id) throws Exception {
+
+    }
+
+    @Override
+    public void update(Agente agent) throws Exception {
+        EntityManager em = Persistence.createEntityManagerFactory(persistence).createEntityManager();
         try {
             em.getTransaction().begin();
-            Agente agent = em.find(Agente.class, id);
-            if (agent != null) {
-                em.remove(agent);
-            }
+            em.merge(agent);
             em.getTransaction().commit();
         } catch (Exception e) {
             em.getTransaction().rollback();
