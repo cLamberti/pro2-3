@@ -10,7 +10,7 @@ import java.util.List;
 public class CamionService {
 
     // Nombre de la unidad de persistencia definida en persistence.xml
-    private static final String PERSISTENCE_UNIT_NAME = "my_persistence";
+    private static final String PERSISTENCE_UNIT_NAME = "my_persistence_unit";
 
     // Método para obtener todos los camiones
     public List<Camion> getAll() throws Exception {
