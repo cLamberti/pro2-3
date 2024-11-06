@@ -1,0 +1,42 @@
+<!-- loadCamiones.xhtml -->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <title>Lista de Camiones</title>
+</h:head>
+<h:body>
+    <h:form>
+        <h1>Lista de Camiones</h1>
+
+        <p:messages autoUpdate="true" />
+
+        <p:dataTable value="#{camionController.camiones}" var="camion" paginator="true" rows="10">
+            <p:column headerText="licensePlate">
+                <h:outputText value="#{camion.licensePlate}" />
+            </p:column>
+
+            <p:column headerText="unitNumber">
+                <h:outputText value="#{camion.unitNumber}" />
+            </p:column>
+
+            <p:column headerText="brand">
+                <h:outputText value="#{camion.brand}" />
+            </p:column>
+
+            <p:column headerText="color">
+                <h:outputText value="#{camion.color}" />
+            </p:column>
+
+            <p:column headerText="model">
+                <h:outputText value="#{camion.model}" />
+            </p:column>
+
+            <p:column headerText="type">
+                <h:outputText value="#{camion.type}" />
+            </p:column>
+        </p:dataTable>
+    </h:form>
+</h:body>
+</html>
