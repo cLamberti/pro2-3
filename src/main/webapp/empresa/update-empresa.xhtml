@@ -4,14 +4,14 @@
       xmlns:p="http://primefaces.org/ui">
 
 <h:head>
-    <title>Modificar Camiones</title>
+    <title>Modificar Empresas</title>
 </h:head>
 <h:body>
     <h:form>
         <h:panelGrid columns="2">
-            <h:outputLabel value="Lista de Camiones" for="camionesTable" />
+            <h:outputLabel value="Lista de Empresas" for="empresasTable" />
         </h:panelGrid>
-        <p:dataTable id="camionesTable" value="#{camionController.camiones}" var="camion" selection="#{camionController.camion}" rowKey="#{camion.licensePlate}"
+        <p:dataTable id="empresasTable" value="#{camionController.camiones}" var="camion" selection="#{camionController.camion}" rowKey="#{camion.licensePlate}"
                      selectionMode="single"
                      onRowSelect="PF('editDialog').show()">
 
@@ -25,18 +25,6 @@
 
             <p:column headerText="Marca">
                 <h:outputText value="#{camion.brand}" />
-            </p:column>
-
-            <p:column headerText="Color">
-                <h:outputText value="#{camion.color}" />
-            </p:column>
-
-            <p:column headerText="Modelo">
-                <h:outputText value="#{camion.model}" />
-            </p:column>
-
-            <p:column headerText="Tipo">
-                <h:outputText value="#{camion.type}" />
             </p:column>
 
         </p:dataTable>

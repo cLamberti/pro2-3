@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+    <title>Listado de Empresas</title>
+</h:head>
+<h:body>
+    <h:form>
+        <h:panelGrid columns="2">
+            <h:outputLabel value="Lista de Empresas" for="empresasTable" />
+            <p:commandButton value="Actualizar" action="#{empresaController.loadEmpresas()}" update="camionesTable" />
+        </h:panelGrid>
+
+        <p:dataTable id="empresasTable" value="#{empresaController.empresas}" var="camion" editable="true">
+
+            <p:column headerText="Nombre">
+                <h:outputText value="#{camion.companyName}" />
+            </p:column>
+
+            <p:column headerText="direccion">
+                <h:outputText value="#{camion.address}" />
+            </p:column>
+
+            <p:column headerText="Contacto">
+                <h:outputText value="#{camion.contact}" />
+            </p:column>
+
+        </p:dataTable>
+    </h:form>
+</h:body>
+</html>
