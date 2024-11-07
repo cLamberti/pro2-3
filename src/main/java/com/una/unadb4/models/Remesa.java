@@ -85,7 +85,7 @@ public class Remesa implements Serializable {
         this.camion = camion;
     }
 
-    public Agente getAgent() {
+    public Agente getAgente() {
         return agente;
     }
 

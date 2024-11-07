@@ -29,10 +29,6 @@ public class AgenteController implements Serializable {
         this.logger = Logger.getLogger(this.getClass().getName());
         this.newAgente = new Agente();
     }
-    private void addMessage(String message) {
-        FacesMessage msg = new FacesMessage( message);
-        FacesContext.getCurrentInstance().addMessage(null,msg);
-    }
     public void loadAgentes() {
         logger.info("Loading agentes...");
         this.agentes.clear();
@@ -60,8 +56,8 @@ public class AgenteController implements Serializable {
         }
     }
 
-    public String addAgente() {
-        logger.info("Adding new agente: " + newAgente.getName());
+    public String saveAgente() {
+        logger.info("Agregando un nuevo agente: " + newAgente.getName());
         try {
             agenteService.store(newAgente);
             addMessage("Agente guardado exitosamente");
@@ -73,4 +69,15 @@ public class AgenteController implements Serializable {
             return null;
         }
     }
+
+    public UploadedFile getFile() {return file;}
+
+    private void addMessage(String message) {
+        FacesMessage msg = new FacesMessage( message);
+        FacesContext.getCurrentInstance().addMessage(null,msg);
+    }
+    public List<Agente> getAgentes() {return agentes;}
+
+    public Agente getNewAgente() {return newAgente;}
+    public void setNewAgente(Agente newAgente) {this.newAgente = newAgente;}
 }
