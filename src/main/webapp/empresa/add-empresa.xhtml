@@ -8,32 +8,21 @@
 </h:head>
 <h:body>
     <h:form>
-        <h1>Registrar Nuevo Camión</h1>
-
+        <h1>Registrar Nueva Empresa</h1>
         <p:messages autoUpdate="true" />
-
         <h:panelGrid columns="2" cellpadding="5">
 
-            <h:outputLabel for="placa" value="Placa:" />
-            <p:inputText id="placa" value="#{camionController.camion.licensePlate}" required="true" />
+            <h:outputLabel for="companyName" value="Nombre:" />
+            <p:inputText id="companyName" value="#{empresaController.empresa.companyName}" required="true" />
 
-            <h:outputLabel for="numero_unidad" value="NumeroUnidad:" />
-            <p:inputText id="numero_unidad" value="#{camionController.camion.unitNumber}" required="true" />
+            <h:outputLabel for="direccion" value="Direccion:" />
+            <p:inputText id="direccion" value="#{empresaController.empresa.address}" required="true" />
 
-            <h:outputLabel for="marca" value="Marca:" />
-            <p:inputText id="marca" value="#{camionController.camion.brand}" required="true" />
-
-            <h:outputLabel for="color" value="Color:" />
-            <p:inputText id="color" value="#{camionController.camion.color}" required="true" />
-
-            <h:outputLabel for="modelo" value="Modelo:" />
-            <p:inputText id="modelo" value="#{camionController.camion.model}" required="true" />
-
-            <h:outputLabel for="tipo" value="Tipo:" />
-            <p:inputText id="tipo" value="#{camionController.camion.type}" required="true" />
+            <h:outputLabel for="contacto" value="Contacto:" />
+            <p:inputText id="contacto" value="#{empresaController.empresa.contact}" required="true" />
 
         </h:panelGrid>
-        <p:commandButton value="Guardar Camión" action="#{camionController.saveCamion}" update="@form" />
+        <p:commandButton value="Guardar Empresa" action="#{empresaController.saveEmpresa}" update="@form" />
     </h:form>
 </h:body>
 </html>
