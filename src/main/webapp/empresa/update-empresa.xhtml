@@ -11,50 +11,41 @@
         <h:panelGrid columns="2">
             <h:outputLabel value="Lista de Empresas" for="empresasTable" />
         </h:panelGrid>
-        <p:dataTable id="empresasTable" value="#{camionController.camiones}" var="camion" selection="#{camionController.camion}" rowKey="#{camion.licensePlate}"
+        <p:dataTable id="empresasTable" value="#{empresaController.empresas}" var="empresa" selection="#{camionController.camion}" rowKey="#{empresa.companyName}"
                      selectionMode="single"
                      onRowSelect="PF('editDialog').show()">
 
-            <p:column headerText="Placa">
-                <h:outputText value="#{camion.licensePlate}" />
+            <p:column headerText="Nombre">
+                <h:outputText value="#{empresa.companyName}" />
             </p:column>
 
-            <p:column headerText="Número de Unidad">
-                <h:outputText value="#{camion.unitNumber}" />
+            <p:column headerText="Direccion">
+                <h:outputText value="#{empresa.address}" />
             </p:column>
 
-            <p:column headerText="Marca">
-                <h:outputText value="#{camion.brand}" />
+            <p:column headerText="Contacto">
+                <h:outputText value="#{empresa.contact}" />
             </p:column>
 
         </p:dataTable>
 
-        <p:dialog header="Modificar Camión" widgetVar="editDialog" modal="true" closable="false">
+        <p:dialog header="Modificar Empresas" widgetVar="editDialog" modal="true" closable="false">
             <h:panelGrid columns="2">
 
-                <h:outputLabel for="licensePlate" value="Placa:" />
-                <p:inputText id="licensePlate" value="#{camionController.camion.licensePlate}" required="true" />
+                <h:outputLabel for="companyName" value="Nombre:" />
+                <p:inputText id="companyName" value="#{empresaController.empresa.companyName}" required="true" />
 
-                <h:outputLabel for="unitNumber" value="Número de Unidad:" />
-                <p:inputText id="unitNumber" value="#{camionController.camion.unitNumber}" required="true" />
+                <h:outputLabel for="address" value="Direccion:" />
+                <p:inputText id="address" value="#{empresaController.empresa.address}" required="true" />
 
-                <h:outputLabel for="brand" value="Marca:" />
-                <p:inputText id="brand" value="#{camionController.camion.brand}" required="true" />
-
-                <h:outputLabel for="color" value="Color:" />
-                <p:inputText id="color" value="#{camionController.camion.color}" required="true" />
-
-                <h:outputLabel for="model" value="Modelo:" />
-                <p:inputText id="model" value="#{camionController.camion.model}" required="true" />
-
-                <h:outputLabel for="type" value="Tipo:" />
-                <p:inputText id="type" value="#{camionController.camion.type}" required="true" />
+                <h:outputLabel for="contact" value="Contacto:" />
+                <p:inputText id="contact" value="#{empresaController.empresa.contact}" required="true" />
 
             </h:panelGrid>
 
             <p:commandButton value="Actualizar"
-                             action="#{camionController.updateCamion()}"
-                             update=":camionesTable"
+                             action="#{empresaController.updateEmpresa()}"
+                             update=":empresasTable"
                              oncomplete="PF('editDialog').hide();"
                              icon="pi pi-check" />
 

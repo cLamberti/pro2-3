@@ -42,7 +42,7 @@
 
             <p:column headerText="Acciones">
                 <p:commandButton value="Eliminar"
-                                 action="#{camionController.deleteCamion(camion.id)}"
+                                 action="#{camionController.deleteCamion(camion.licensePlate)}"
                                  update="camionesTable"
                                  oncomplete="PF('dlg').hide();"
                                  icon="pi pi-trash"
@@ -54,7 +54,7 @@
         <p:dialog header="Confirmación" widgetVar="dlg" modal="true" closable="false">
             <h:outputText value="¿Estás seguro de que deseas eliminar este camión?" />
             <p:commandButton value="Sí"
-                             action="#{camionController.deleteCamion(camion.id)}"
+                             action="#{camionController.deleteCamion(camion.licensePlate)}"
                              update="camionesTable"
                              oncomplete="PF('dlg').hide();" />
             <p:commandButton value="No" onclick="PF('dlg').hide();" type="button" />

@@ -4,45 +4,31 @@
       xmlns:p="http://primefaces.org/ui">
 
 <h:head>
-    <title>Listado de Camiones</title>
+    <title>Listado de Empresas</title>
 </h:head>
 <h:body>
-
     <h:form>
-
         <h:panelGrid columns="2">
-            <h:outputLabel value="Lista de Camiones" for="camionesTable" />
+            <h:outputLabel value="Lista de Empresas" for="empresasTable" />
         </h:panelGrid>
 
-        <p:dataTable id="camionesTable" value="#{camionController.camiones}" var="camion">
+        <p:dataTable id="empresasTable" value="#{empresaController.empresas}" var="empresa">
 
-            <p:column headerText="Placa">
-                <h:outputText value="#{camion.licensePlate}" />
+            <p:column headerText="Nombre">
+                <h:outputText value="#{empresa.companyName}" />
             </p:column>
 
-            <p:column headerText="Número de Unidad">
-                <h:outputText value="#{camion.unitNumber}" />
+            <p:column headerText="Direccion">
+                <h:outputText value="#{empresa.address}" />
             </p:column>
 
-            <p:column headerText="Marca">
-                <h:outputText value="#{camion.brand}" />
-            </p:column>
-
-            <p:column headerText="Color">
-                <h:outputText value="#{camion.color}" />
-            </p:column>
-
-            <p:column headerText="Modelo">
-                <h:outputText value="#{camion.model}" />
-            </p:column>
-
-            <p:column headerText="Tipo">
-                <h:outputText value="#{camion.type}" />
+            <p:column headerText="Contacto">
+                <h:outputText value="#{empresa.contact}" />
             </p:column>
 
             <p:column headerText="Acciones">
                 <p:commandButton value="Eliminar"
-                                 action="#{camionController.deleteCamion(camion.id)}"
+                                 action="#{empresaController.deleteEmpresa(empresa.companyName)}"
                                  update="camionesTable"
                                  oncomplete="PF('dlg').hide();"
                                  icon="pi pi-trash"
@@ -54,8 +40,8 @@
         <p:dialog header="Confirmación" widgetVar="dlg" modal="true" closable="false">
             <h:outputText value="¿Estás seguro de que deseas eliminar este camión?" />
             <p:commandButton value="Sí"
-                             action="#{camionController.deleteCamion(camion.id)}"
-                             update="camionesTable"
+                             action="#{empresaController.deleteEmpresa(empresa.companyName)}"
+                             update="empresasTable"
                              oncomplete="PF('dlg').hide();" />
             <p:commandButton value="No" onclick="PF('dlg').hide();" type="button" />
         </p:dialog>
