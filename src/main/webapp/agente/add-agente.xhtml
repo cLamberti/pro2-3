@@ -6,9 +6,9 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 <f:view>
-    <f:event type="preRenderView" listener="#{remesaController.loadRemesas()}"/>
+    <f:event type="preRenderView" listener="#{agenteController.loadAgentes()}"/>
     <h:head>
-        <title>Agregar Remesa - SGR - Remmitance Trucks CR</title>
+        <title>Actualizar Agente - SGR - Remmitance Trucks CR</title>
         <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
         <meta http-equiv="Content-Type" content="text/html" charset="utf-8"/>
     </h:head>
@@ -60,38 +60,47 @@
                 </div> <!--Fin Menu-->
             </div>
             <div id="contentPage"> <!--Inicia el contenido-->
-                <p:growl id="msg" showDetail="true" life="3000"/>
-
-                <h3>Agregar Nueva Remesa</h3>
-
-                <h:form id="formAddRemesa">
-                    <p:panelGrid columns="2" style="width: 100%;" columnClasses="label, value">
-
-                        <h:outputLabel for="type" value="Tipo:" />
-                        <p:inputText id="type" value="#{remesaController.remesa.type}" required="true" label="Tipo" />
-
-                        <h:outputLabel for="date" value="Fecha:" />
-                        <p:calendar id="date" value="#{remesaController.remesa.date}" pattern="dd/MM/yyyy" showOn="button" required="true" label="Fecha" />
-
-                        <h:outputLabel for="time" value="Hora:" />
-                        <p:inputText id="time" value="#{remesaController.remesa.time}" required="true" label="Hora" />
-
-                        <h:outputLabel for="status" value="Estado:" />
-                        <p:inputText id="status" value="#{remesaController.remesa.status}" required="true" label="Estado" />
-
-                        <h:outputLabel for="camion" value="Camión:" />
-                        <p:inputText id="camion" value="#{remesaController.remesa.camion.licensePlate}" required="true" label="Camión" />
-
-                        <h:outputLabel for="agente" value="Agente:" />
-                        <p:inputText id="agente" value="#{remesaController.remesa.agente.name}" required="true" label="Agente" />
-
-                    </p:panelGrid>
-
-                    <p:commandButton value="Guardar Remesa" action="#{remesaController.saveRemesa()}" process="@form" update="@form:msg" oncomplete="PF('msg').show();" icon="fa fa-save" />
-
+                <h4>Actualización de Agente</h4>
+                <h:form id="updateForm" style="width: 80%;margin: 5px auto">
+                    <p:growl id="msg" life="3000" showDetail="true"/>
+                    <div class="ui-fluid p-formgrid p-grid">
+                        <div class="p-field p-col-12">
+                            <p:outputLabel value="Identificación" for="id"/>
+                            <p:inputText id="id" value="#{agenteController.newAgente.id}" disabled="true"/>
+                        </div>
+                        <div class="p-field p-col-12">
+                            <p:outputLabel value="Nombre" for="name"/>
+                            <p:inputText id="name" value="#{agenteController.newAgente.name}" required="true" requiredMessage="Campo obligatorio"/>
+                            <h:message for="name"/>
+                        </div>
+                        <div class="p-field p-col-12">
+                            <p:outputLabel value="Teléfono" for="phone"/>
+                            <p:inputText id="phone" value="#{agenteController.newAgente.phone}" required="true" requiredMessage="Campo obligatorio"/>
+                            <h:message for="phone"/>
+                        </div>
+                        <div class="p-field p-col-12">
+                            <p:outputLabel value="Correo Electrónico" for="email"/>
+                            <p:inputText id="email" value="#{agenteController.newAgente.email}" required="true" requiredMessage="Campo obligatorio"/>
+                            <h:message for="email"/>
+                        </div>
+                        <div class="p-field p-col-12">
+                            <p:outputLabel value="Fotografía" for="photo"/>
+                            <p:fileUpload id="photo" fileUploadListener="#{agenteController.uploadFile}"
+                                          mode="simple" auto="true" label="Subir" />
+                        </div>
+                        <p:panelGrid id="btnPanel" style="width: 100%">
+                            <p:row>
+                                <p:column style="width: 45%;border: none"/>
+                                <p:column style="width: 10%;border: none">
+                                    <p:commandButton value="Guardar" styleClass="ui-button blue-bg"
+                                                     action="#{agenteController.saveAgente()}" update="msg"/>
+                                </p:column>
+                                <p:column style="width: 45%;border: none"/>
+                            </p:row>
+                        </p:panelGrid>
+                    </div>
                 </h:form>
             </div> <!--fin del contenido-->
-
             <div id="footerPage">
                 <hr/>
                 <p>&copy;2024 Universidad Nacional. Todos los derechos reservados</p>
