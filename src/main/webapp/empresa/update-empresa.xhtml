@@ -11,7 +11,7 @@
         <h:panelGrid columns="2">
             <h:outputLabel value="Lista de Empresas" for="empresasTable" />
         </h:panelGrid>
-        <p:dataTable id="empresasTable" value="#{empresaController.empresas}" var="empresa" selection="#{camionController.camion}" rowKey="#{empresa.companyName}"
+        <p:dataTable id="empresasTable" value="#{empresaController.empresas}" var="empresa" selection="#{empresaController.empresa}" rowKey="#{empresa.companyName}"
                      selectionMode="single"
                      onRowSelect="PF('editDialog').show()">
 

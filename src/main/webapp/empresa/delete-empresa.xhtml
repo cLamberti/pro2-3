@@ -29,16 +29,16 @@
             <p:column headerText="Acciones">
                 <p:commandButton value="Eliminar"
                                  action="#{empresaController.deleteEmpresa(empresa.companyName)}"
-                                 update="camionesTable"
+                                 update="empresasTable"
                                  oncomplete="PF('dlg').hide();"
                                  icon="pi pi-trash"
-                                 onclick="return confirm('¿Estás seguro de que deseas eliminar este camión?');" />
+                                 onclick="return confirm('¿Estás seguro de que deseas eliminar esta empresa?');" />
             </p:column>
 
         </p:dataTable>
 
         <p:dialog header="Confirmación" widgetVar="dlg" modal="true" closable="false">
-            <h:outputText value="¿Estás seguro de que deseas eliminar este camión?" />
+            <h:outputText value="¿Estás seguro de que deseas eliminar esta empresa?" />
             <p:commandButton value="Sí"
                              action="#{empresaController.deleteEmpresa(empresa.companyName)}"
                              update="empresasTable"

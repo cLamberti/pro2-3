@@ -10,21 +10,21 @@
     <h:form>
         <h:panelGrid columns="2">
             <h:outputLabel value="Lista de Empresas" for="empresasTable" />
-            <p:commandButton value="Actualizar" action="#{empresaController.loadEmpresas()}" update="camionesTable" />
+            <p:commandButton value="Actualizar" action="#{empresaController.loadEmpresas()}" update="empresasTable" />
         </h:panelGrid>
 
-        <p:dataTable id="empresasTable" value="#{empresaController.empresas}" var="camion" editable="true">
+        <p:dataTable id="empresasTable" value="#{empresaController.empresas}" var="empresa" editable="true">
 
             <p:column headerText="Nombre">
-                <h:outputText value="#{camion.companyName}" />
+                <h:outputText value="#{empresa.companyName}" />
             </p:column>
 
             <p:column headerText="direccion">
-                <h:outputText value="#{camion.address}" />
+                <h:outputText value="#{empresa.address}" />
             </p:column>
 
             <p:column headerText="Contacto">
-                <h:outputText value="#{camion.contact}" />
+                <h:outputText value="#{empresa.contact}" />
             </p:column>
 
         </p:dataTable>
