@@ -1,19 +1,33 @@
 package com.una.unadb4.models;
 
-public class User {
-    private String username;
+import jakarta.faces.view.ViewScoped;
+import jakarta.inject.Named;
+import jakarta.persistence.Column;
+import jakarta.persistence.Convert;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import org.hibernate.type.NumericBooleanConverter;
+
+import java.io.Serializable;
+
+@Named
+@ViewScoped
+@Entity(name = "userdb")
+public class User implements Serializable {
+    @Id
+    private String userName;
+    @Column(name = "password")
     private String password;
+    @Convert(converter = NumericBooleanConverter.class)
+    @Column(name = "admin")
     private Boolean admin;
-    public User() {
-        //this.isAdmin=true;
-    }
 
     public String getUsername() {
-        return username;
+        return userName;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUsername(String userName) {
+        this.userName = userName;
     }
 
     public String getPassword() {
@@ -23,10 +37,12 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
-    public Boolean getAdmin() {
+
+    public boolean isAdmin() {
         return admin;
     }
-    public void setAdmin(Boolean isAdmin) {
-        this.admin = isAdmin;
+
+    public void setAdmin(boolean admin) {
+        this.admin = admin;
     }
 }

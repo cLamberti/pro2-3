@@ -1,7 +1,9 @@
 package com.una.unadb4.controllers;
 
 import com.una.unadb4.models.Remesa;
+import com.una.unadb4.models.User;
 import com.una.unadb4.services.RemesaService;
+import jakarta.annotation.Nonnull;
 import jakarta.enterprise.inject.Model;
 import jakarta.faces.application.FacesMessage;
 import jakarta.faces.context.FacesContext;
@@ -20,57 +22,59 @@ public class RemesaController implements Serializable {
 
     private Remesa newRemesa;
     private List<Remesa> remesas; // Lista de todas las remesas
-    private final RemesaService remesaService; // Servicio para operaciones CRUD
-    private final Logger logger;
+    private RemesaService remesaService; // Servicio para operaciones CRUD
+    private Logger logger;
 
     public RemesaController() {
         this.remesaService = new RemesaService();
         this.logger = Logger.getLogger(this.getClass().getName());
-        this.newRemesa = new Remesa();
         this.remesas = new ArrayList<>();
     }
 
     public void loadRemesas() {
+        logger.log(Level.INFO, "Loading remesas");
+        this.remesas.clear();
         try {
             this.remesas = remesaService.getAll();
         } catch (Exception e) {
-            logger.log(Level.WARNING, "Error al agregar la remesa: {0}", e.getMessage());
-            addMessage("Error no se pudieron cargar las remesas.");
+            logger.log(Level.WARNING, "Error al cargar las remesas", e);
+            this.addMessage(e.getMessage());
         }
     }
 
-    public String saveRemesa() {
-        logger.info("Agregando nueva remesa: " + newRemesa.getId());
+    public String saveRemesa(@Nonnull Remesa remesa) {
+        Object id = FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("id");
+        logger.info("Guardando nueva remesa");
         try {
-            remesaService.store(newRemesa);
-            addMessage("Éxito, remesa guardada correctamente.");
-            return "/remesa/add.remesa?faces-redirect=true";
+            remesaService.store(remesa);
+            return "/remesa/list-remesa?faces-redirect=true";
         } catch (Exception e) {
-            logger.log(Level.SEVERE, "Error al guardar la remesa", e);
-            addMessage("Error no se pudo guardar la remesa.");
+            logger.log(Level.WARNING, "Error al guardar la remesa", e);
+            addMessage(e.getMessage());
             return null;
         }
     }
 
-    public void updateRemesa() {
+    public void updateRemesa(@Nonnull Remesa remesa) {
         try {
-            remesaService.update(newRemesa);
-            addMessage("Exito remesa actualizada correctamente.");
-            loadRemesas(); // Recarga la lista de remesas
+            remesaService.update(remesa);
+            this.addMessage("Exito remesa actualizada correctamente.");
         } catch (Exception e) {
-            logger.log(Level.SEVERE, "Error al actualizar la remesa", e);
-            addMessage("Error No se pudo actualizar la remesa.");
+            logger.log(Level.WARNING, "Error al actualizar la remesa", e);
+            addMessage(e.getMessage());
         }
     }
 
-    public void deleteRemesa(int id) {
+    public String deleteRemesa(@Nonnull Integer id) {
         try {
+            Remesa aux = remesaService.getById(id);
             remesaService.delete(id);
-            addMessage("Éxito, Remesa eliminada correctamente.");
-            loadRemesas(); // Recarga la lista de remesas
+            this.addMessage("Éxito, Remesa eliminada correctamente.");
+            return "/home?faces-redirect=true";
         } catch (Exception e) {
-            logger.log(Level.SEVERE, "Error al eliminar la remesa", e);
-            addMessage("No se pudo eliminar la remesa.");
+            logger.log(Level.WARNING, "Error al eliminar la remesa", e);
+            addMessage(e.getMessage());
+            return null;
         }
     }
 
