@@ -24,7 +24,7 @@ public class CamionController implements Serializable {
     private final CamionService camionService; // Servicio para operaciones CRUD
     private final Logger logger;
 
-    public CamionController() throws Exception {
+    public CamionController() throws Exception { // HOLA
         this.camionService = new CamionService();
         this.camion = new Camion();
         this.logger = Logger.getLogger(this.getClass().getName());
