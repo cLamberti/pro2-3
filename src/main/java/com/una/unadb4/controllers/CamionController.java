@@ -45,15 +45,16 @@ public class CamionController implements Serializable {
     }
 
     // Método para guardar un nuevo camión
-    public void saveCamion() {
+    public String saveCamion() {
         try {
             camionService.store(camion);
             addMessage(FacesMessage.SEVERITY_INFO, "Éxito", "Camión guardado correctamente.");
-            this.camion = new Camion();
+            return this.backList();
         } catch (Exception e) {
             logger.log(Level.SEVERE, "Error al guardar el camión", e);
             addMessage(FacesMessage.SEVERITY_ERROR, "Error", "No se pudo guardar el camión.");
         }
+        return null;
     }
 
     // Método para actualizar un camión existente
@@ -93,7 +94,16 @@ public class CamionController implements Serializable {
 
     public String backList(){
         loadCamiones();
-        return "list-camion?faces-redirect=true";
+        return "/camion/list-camion?faces-redirect=true";
+    }
+
+    public void backList2() {
+        loadCamiones();
+        try {
+            FacesContext.getCurrentInstance().getExternalContext().redirect("list-camion.xhtml");
+        } catch (IOException e) {
+            logger.log(Level.SEVERE, "Error al redirigir a la lista de camiones", e);
+        }
     }
 
     // Método para mostrar mensajes en la interfaz

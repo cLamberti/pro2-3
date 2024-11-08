@@ -67,7 +67,8 @@ public class RemesaController implements Serializable {
 
     public String deleteRemesa(@Nonnull String id) {
         try {
-            Remesa aux = remesaService.getById(id);
+            int Sid = Integer.parseInt(id);
+            Remesa aux = remesaService.getById(Sid);
             remesaService.delete(id);
             this.addMessage("Éxito, Remesa eliminada correctamente.");
             return "/home?faces-redirect=true";

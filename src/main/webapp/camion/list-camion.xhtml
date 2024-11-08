@@ -17,7 +17,7 @@
                          action="#{camionController.setAdd()}"
                          icon="pi pi-edit"/>
 
-        <p:dataTable id="camionesTable" value="#{camionController.camiones}" var="camionT" rows="5" striped="true" hover="true">
+        <p:dataTable id="camionesTable" value="#{camionController.camiones}" var="camionT" striped="true" hover="true">
 
             <p:column headerText="Placa">
                 <h:outputText value="#{camionT.licensePlate}" />

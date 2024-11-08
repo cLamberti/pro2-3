@@ -33,9 +33,10 @@
             <p:inputText id="tipo" value="#{camionController.camion.type}" required="true" />
 
         </h:panelGrid>
-        <p:commandButton value="Guardar Camión" action="#{camionController.saveCamion}" update="@form" />
+        <p:commandButton value="Guardar Camión" action="#{camionController.saveCamion()}" update="@form" />
         <p:commandButton value="Volver"
-                         action="#{camionController.backList()}"
+                         immediate="true"
+                         action="#{camionController.backList}"
                          icon="pi pi-edit"/>
     </h:form>
 </h:body>
