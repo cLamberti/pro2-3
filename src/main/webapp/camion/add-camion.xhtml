@@ -34,6 +34,9 @@
 
         </h:panelGrid>
         <p:commandButton value="Guardar Camión" action="#{camionController.saveCamion}" update="@form" />
+        <p:commandButton value="Volver"
+                         action="#{camionController.backList()}"
+                         icon="pi pi-edit"/>
     </h:form>
 </h:body>
 </html>

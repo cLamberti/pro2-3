@@ -68,7 +68,7 @@ public class RemesaService extends Service<Remesa> {
     }
 
     @Override
-    public void delete(int id) throws Exception {
+    public void delete(String id) throws Exception {
         EntityManager em = Persistence.createEntityManagerFactory(persistence).createEntityManager();
         try {
             em.getTransaction().begin();

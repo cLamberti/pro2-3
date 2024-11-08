@@ -2,19 +2,21 @@ package com.una.unadb4.controllers;
 
 import com.una.unadb4.models.Camion;
 import com.una.unadb4.services.CamionService;
+import jakarta.enterprise.context.SessionScoped;
 import jakarta.enterprise.inject.Model;
 import jakarta.faces.application.FacesMessage;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Named;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @Model
-@ViewScoped
+@SessionScoped
 public class CamionController implements Serializable {
 
     private Camion camion; // Camión actual en el formulario
@@ -22,10 +24,11 @@ public class CamionController implements Serializable {
     private final CamionService camionService; // Servicio para operaciones CRUD
     private final Logger logger;
 
-    public CamionController() {
+    public CamionController() throws Exception {
         this.camionService = new CamionService();
         this.camion = new Camion();
         this.logger = Logger.getLogger(this.getClass().getName());
+        this.camionService.getAll();
         loadCamiones(); // Carga inicial de todos los camiones
     }
 
@@ -33,6 +36,8 @@ public class CamionController implements Serializable {
     public void loadCamiones() {
         try {
             this.camiones = camionService.getAll();
+            System.out.println(this.camiones);
+            //addMessage(FacesMessage.SEVERITY_ERROR, "Error", "Algo"+this.camiones.get(0).getBrand());
         } catch (Exception e) {
             logger.log(Level.SEVERE, "Error al cargar los camiones", e);
             addMessage(FacesMessage.SEVERITY_ERROR, "Error", "No se pudieron cargar los camiones.");
@@ -44,8 +49,7 @@ public class CamionController implements Serializable {
         try {
             camionService.store(camion);
             addMessage(FacesMessage.SEVERITY_INFO, "Éxito", "Camión guardado correctamente.");
-            this.camion = new Camion(); // Reinicia el formulario
-            loadCamiones(); // Recarga la lista de camiones
+            this.camion = new Camion();
         } catch (Exception e) {
             logger.log(Level.SEVERE, "Error al guardar el camión", e);
             addMessage(FacesMessage.SEVERITY_ERROR, "Error", "No se pudo guardar el camión.");
@@ -53,19 +57,20 @@ public class CamionController implements Serializable {
     }
 
     // Método para actualizar un camión existente
-    public void updateCamion() {
+    public String updateCamion() {
         try {
             camionService.update(camion);
             addMessage(FacesMessage.SEVERITY_INFO, "Éxito", "Camión actualizado correctamente.");
-            loadCamiones(); // Recarga la lista de camiones
+            return this.backList();
         } catch (Exception e) {
             logger.log(Level.SEVERE, "Error al actualizar el camión", e);
             addMessage(FacesMessage.SEVERITY_ERROR, "Error", "No se pudo actualizar el camión.");
         }
+        return null;
     }
 
     // Método para eliminar un camión por su ID
-    public void deleteCamion(int id) {
+    public void deleteCamion(String id) {
         try {
             camionService.delete(id);
             addMessage(FacesMessage.SEVERITY_INFO, "Éxito", "Camión eliminado correctamente.");
@@ -74,6 +79,21 @@ public class CamionController implements Serializable {
             logger.log(Level.SEVERE, "Error al eliminar el camión", e);
             addMessage(FacesMessage.SEVERITY_ERROR, "Error", "No se pudo eliminar el camión.");
         }
+    }
+
+    public String setEdit(Camion camion){
+        this.camion = camion;
+        return "update-camion?faces-redirect=true";
+    }
+
+    public String setAdd(){
+        this.camion = new Camion();
+        return "add-camion?faces-redirect=true";
+    }
+
+    public String backList(){
+        loadCamiones();
+        return "list-camion?faces-redirect=true";
     }
 
     // Método para mostrar mensajes en la interfaz

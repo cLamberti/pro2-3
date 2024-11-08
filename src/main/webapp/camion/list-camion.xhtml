@@ -8,37 +8,65 @@
 </h:head>
 <h:body>
     <h:form>
+
         <h:panelGrid columns="2">
             <h:outputLabel value="Lista de Camiones" for="camionesTable" />
             <p:commandButton value="Actualizar" action="#{camionController.loadCamiones()}" update="camionesTable" />
         </h:panelGrid>
+        <p:commandButton value="Agregar"
+                         action="#{camionController.setAdd()}"
+                         icon="pi pi-edit"/>
 
-        <p:dataTable id="camionesTable" value="#{camionController.camiones}" var="camion" editable="true">
+        <p:dataTable id="camionesTable" value="#{camionController.camiones}" var="camionT" rows="5" striped="true" hover="true">
 
             <p:column headerText="Placa">
-                <h:outputText value="#{camion.licensePlate}" />
+                <h:outputText value="#{camionT.licensePlate}" />
             </p:column>
 
             <p:column headerText="Número de Unidad">
-                <h:outputText value="#{camion.unitNumber}" />
+                <h:outputText value="#{camionT.unitNumber}" />
             </p:column>
 
             <p:column headerText="Marca">
-                <h:outputText value="#{camion.brand}" />
+                <h:outputText value="#{camionT.brand}" />
             </p:column>
 
             <p:column headerText="Color">
-                <h:outputText value="#{camion.color}" />
+                <h:outputText value="#{camionT.color}" />
             </p:column>
 
             <p:column headerText="Modelo">
-                <h:outputText value="#{camion.model}" />
+                <h:outputText value="#{camionT.model}" />
             </p:column>
 
             <p:column headerText="Tipo">
-                <h:outputText value="#{camion.type}" />
+                <h:outputText value="#{camionT.type}" />
             </p:column>
+
+            <p:column headerText="Editar">
+                <p:commandButton value="Editar"
+                                 action="#{camionController.setEdit(camionT)}"
+                                 icon="pi pi-edit"/>
+            </p:column>
+            <p:column headerText="Acciones">
+                <p:commandButton value="Eliminar"
+                                 action="#{camionController.deleteCamion(camionT.licensePlate)}"
+                                 update="camionesTable"
+                                 oncomplete="PF('dlg').hide();"
+                                 icon="pi pi-trash"
+                                 onclick="return confirm('¿Estás seguro de que deseas eliminar este camión?');" />
+            </p:column>
+
         </p:dataTable>
+
+        <p:dialog header="Confirmación" widgetVar="dlg" modal="true" closable="false">
+            <h:outputText value="¿Estás seguro de que deseas eliminar este camión?" />
+            <p:commandButton value="Sí"
+                             action="#{camionController.deleteCamion(camionT.licensePlate)}"
+                             update="camionesTable"
+                             oncomplete="PF('dlg').hide();" />
+            <p:commandButton value="No" onclick="PF('dlg').hide();" type="button" />
+        </p:dialog>
     </h:form>
 </h:body>
 </html>

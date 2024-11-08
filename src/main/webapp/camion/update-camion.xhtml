@@ -1,79 +1,42 @@
+<!-- saveCamion.xhtml -->
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui">
-
 <h:head>
-    <title>Modificar Camiones</title>
+    <title>Editar Camión</title>
 </h:head>
 <h:body>
     <h:form>
-        <h:panelGrid columns="2">
-            <h:outputLabel value="Lista de Camiones" for="camionesTable" />
+        <h1>Editar Camión</h1>
+
+        <p:messages autoUpdate="true" />
+
+        <h:panelGrid columns="2" cellpadding="5">
+
+            <h:outputText for="placa" value="Placa:" />
+            <h:outputText id="placa" value="#{camionController.camion.licensePlate}"/>
+
+            <h:outputLabel for="numero_unidad" value="NumeroUnidad:" />
+            <p:inputText id="numero_unidad" value="#{camionController.camion.unitNumber}" required="true" />
+
+            <h:outputLabel for="marca" value="Marca:" />
+            <p:inputText id="marca" value="#{camionController.camion.brand}" required="true" />
+
+            <h:outputLabel for="color" value="Color:" />
+            <p:inputText id="color" value="#{camionController.camion.color}" required="true" />
+
+            <h:outputLabel for="modelo" value="Modelo:" />
+            <p:inputText id="modelo" value="#{camionController.camion.model}" required="true" />
+
+            <h:outputLabel for="tipo" value="Tipo:" />
+            <p:inputText id="tipo" value="#{camionController.camion.type}" required="true" />
+
         </h:panelGrid>
-        <p:dataTable id="camionesTable" value="#{camionController.camiones}" var="camion" selection="#{camionController.camion}" rowKey="#{camion.licensePlate}"
-                     selectionMode="single"
-                     onRowSelect="PF('editDialog').show()">
-
-            <p:column headerText="Placa">
-                <h:outputText value="#{camion.licensePlate}" />
-            </p:column>
-
-            <p:column headerText="Número de Unidad">
-                <h:outputText value="#{camion.unitNumber}" />
-            </p:column>
-
-            <p:column headerText="Marca">
-                <h:outputText value="#{camion.brand}" />
-            </p:column>
-
-            <p:column headerText="Color">
-                <h:outputText value="#{camion.color}" />
-            </p:column>
-
-            <p:column headerText="Modelo">
-                <h:outputText value="#{camion.model}" />
-            </p:column>
-
-            <p:column headerText="Tipo">
-                <h:outputText value="#{camion.type}" />
-            </p:column>
-
-        </p:dataTable>
-
-        <p:dialog header="Modificar Camión" widgetVar="editDialog" modal="true" closable="false">
-            <h:panelGrid columns="2">
-
-                <h:outputLabel for="licensePlate" value="Placa:" />
-                <p:inputText id="licensePlate" value="#{camionController.camion.licensePlate}" required="true" />
-
-                <h:outputLabel for="unitNumber" value="Número de Unidad:" />
-                <p:inputText id="unitNumber" value="#{camionController.camion.unitNumber}" required="true" />
-
-                <h:outputLabel for="brand" value="Marca:" />
-                <p:inputText id="brand" value="#{camionController.camion.brand}" required="true" />
-
-                <h:outputLabel for="color" value="Color:" />
-                <p:inputText id="color" value="#{camionController.camion.color}" required="true" />
-
-                <h:outputLabel for="model" value="Modelo:" />
-                <p:inputText id="model" value="#{camionController.camion.model}" required="true" />
-
-                <h:outputLabel for="type" value="Tipo:" />
-                <p:inputText id="type" value="#{camionController.camion.type}" required="true" />
-
-            </h:panelGrid>
-
-            <p:commandButton value="Actualizar"
-                             action="#{camionController.updateCamion()}"
-                             update=":camionesTable"
-                             oncomplete="PF('editDialog').hide();"
-                             icon="pi pi-check" />
-
-            <p:commandButton value="Cancelar" onclick="PF('editDialog').hide();" type="button" />
-        </p:dialog>
-
+        <p:commandButton value="Guardar Camión" action="#{camionController.updateCamion()}" update="@form" />
+        <p:commandButton value="Volver"
+                         action="#{camionController.backList()}"
+                         icon="pi pi-edit"/>
     </h:form>
-
 </h:body>
 </html>

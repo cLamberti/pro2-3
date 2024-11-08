@@ -68,7 +68,7 @@ public class EmpresaService extends Service<Empresa> {
     }
 
     @Override
-    public void delete(int id) throws Exception {
+    public void delete(String id) throws Exception {
         EntityManager em = Persistence.createEntityManagerFactory(persistence).createEntityManager();
         try {
             em.getTransaction().begin();

@@ -63,7 +63,7 @@ public class RemesaController implements Serializable {
         }
     }
 
-    public void deleteRemesa(int id) {
+    public void deleteRemesa(String id) {
         try {
             remesaService.delete(id);
             addMessage("Éxito, Remesa eliminada correctamente.");

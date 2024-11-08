@@ -65,7 +65,7 @@ public class EmpresaController implements Serializable {
     }
 
     // Método para eliminar una empresa por su ID
-    public void deleteEmpresa(int id) {
+    public void deleteEmpresa(String id) {
         try {
             empresaService.delete(id);
             addMessage(FacesMessage.SEVERITY_INFO, "Éxito", "Empresa eliminada correctamente.");
