@@ -13,6 +13,9 @@ import java.io.Serializable;
 @Entity(name = "empresas")
 public class Empresa implements Serializable {
     @Id
+    private String id;
+
+    @Column(name = "nombreCompañia")
     private String companyName;
 
     @Column(name = "direccion")
@@ -22,6 +25,12 @@ public class Empresa implements Serializable {
     private String contact;
 
     // Getters y Setters
+    public String getId() {
+        return id;
+    }
+    public void setId(String id) {
+        this.id = id;
+    }
     public String getCompanyName() {
         return companyName;
     }

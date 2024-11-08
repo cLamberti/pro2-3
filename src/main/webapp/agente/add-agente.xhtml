@@ -6,8 +6,9 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 <f:view>
+    <f:event type="preRenderView" listener="#{agenteController.loadAgentes()}"/>
     <h:head>
-        <title>Home - SGR - Remmitance Trucks CR</title>
+        <title>Actualizar Agente - SGR - Remmitance Trucks CR</title>
         <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
         <meta http-equiv="Content-Type" content="text/html" charset="utf-8"/>
     </h:head>
@@ -34,8 +35,8 @@
                                 <p:menuitem value="Nueva" action="/remesa/add-remesa?faces-redirect=true"/>
                             </p:submenu>
                             <p:submenu label="Agentes">
-                                <p:menuitem value="Listar" action="/Agente/list-agentes?faces-redirect=true"/>
-                                <p:menuitem value="Nuevo" action="/Agente/add-agente?faces-redirect=true"/>
+                                <p:menuitem value="Listar" action="/agente/list-agentes?faces-redirect=true"/>
+                                <p:menuitem value="Nuevo" action="/agente/add-agente?faces-redirect=true"/>
                             </p:submenu>
                             <p:submenu label="Camiones">
                                 <p:menuitem value="Listar" action="/camion/list-camiones?faces-redirect=true"/>
@@ -59,13 +60,46 @@
                 </div> <!--Fin Menu-->
             </div>
             <div id="contentPage"> <!--Inicia el contenido-->
-                <p:panelGrid id="content" style="width: 100%">
-                    <p:row style="height: 400px;">
-                        <p:column style="width: 100%;margin: 0px auto;border: none">
-                            <h:graphicImage library="images" name="una-horizontal.png" style="width: 300px;display: block; margin: 0 auto;"/>
-                        </p:column>
-                    </p:row>
-                </p:panelGrid>
+                <h4>Actualización de Agente</h4>
+                <h:form id="updateForm" style="width: 80%;margin: 5px auto">
+                    <p:growl id="msg" life="3000" showDetail="true"/>
+                    <div class="ui-fluid p-formgrid p-grid">
+                        <div class="p-field p-col-12">
+                            <p:outputLabel value="Identificación" for="id"/>
+                            <p:inputText id="id" value="#{agenteController.newAgente.id}" disabled="true"/>
+                        </div>
+                        <div class="p-field p-col-12">
+                            <p:outputLabel value="Nombre" for="name"/>
+                            <p:inputText id="name" value="#{agenteController.newAgente.name}" required="true" requiredMessage="Campo obligatorio"/>
+                            <h:message for="name"/>
+                        </div>
+                        <div class="p-field p-col-12">
+                            <p:outputLabel value="Teléfono" for="phone"/>
+                            <p:inputText id="phone" value="#{agenteController.newAgente.phone}" required="true" requiredMessage="Campo obligatorio"/>
+                            <h:message for="phone"/>
+                        </div>
+                        <div class="p-field p-col-12">
+                            <p:outputLabel value="Correo Electrónico" for="email"/>
+                            <p:inputText id="email" value="#{agenteController.newAgente.email}" required="true" requiredMessage="Campo obligatorio"/>
+                            <h:message for="email"/>
+                        </div>
+                        <div class="p-field p-col-12">
+                            <p:outputLabel value="Fotografía" for="photo"/>
+                            <p:fileUpload id="photo" fileUploadListener="#{agenteController.uploadFile}"
+                                          mode="simple" auto="true" label="Subir" />
+                        </div>
+                        <p:panelGrid id="btnPanel" style="width: 100%">
+                            <p:row>
+                                <p:column style="width: 45%;border: none"/>
+                                <p:column style="width: 10%;border: none">
+                                    <p:commandButton value="Guardar" styleClass="ui-button blue-bg"
+                                                     action="#{agenteController.saveAgente()}" update="msg"/>
+                                </p:column>
+                                <p:column style="width: 45%;border: none"/>
+                            </p:row>
+                        </p:panelGrid>
+                    </div>
+                </h:form>
             </div> <!--fin del contenido-->
             <div id="footerPage">
                 <hr/>
