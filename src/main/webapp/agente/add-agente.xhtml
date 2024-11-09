@@ -2,6 +2,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 <h:head>
     <title>Guardar Camión</title>
@@ -24,7 +25,11 @@
             <p:inputText id="lastname" value="#{agenteController.agente.lastname}" required="true" />
 
             <h:outputLabel for="agentType" value="Tipo:" />
-            <p:inputText id="agentType" value="#{agenteController.agente.agentType}" required="true" />
+            <p:selectOneMenu id="agentType" value="#{agenteController.agente.agentType}" required="true">
+                <f:selectItem itemLabel="Seleccione tipo" itemValue="" noSelectionOption="true" />
+                <f:selectItem itemLabel="Conductor" itemValue="Conductor" />
+                <f:selectItem itemLabel="Escolta" itemValue="Escolta" />
+            </p:selectOneMenu>
 
             <h:outputLabel for="photo" value="Foto:" />
             <p:inputText id="photo" value="#{agenteController.agente.photo}" required="true" />

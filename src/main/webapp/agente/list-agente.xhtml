@@ -4,13 +4,13 @@
       xmlns:p="http://primefaces.org/ui">
 
 <h:head>
-    <title>Listado de Camiones</title>
+    <title>Listado de Agentes</title>
 </h:head>
 <h:body>
     <h:form>
 
         <h:panelGrid columns="2">
-            <h:outputLabel value="Lista de Camiones" for="agentesTable" />
+            <h:outputLabel value="Lista de Agentes" for="agentesTable" />
             <p:commandButton value="Actualizar" action="#{agenteController.loadAgentes()}" update="agentesTable" icon="pi pi-refresh"/>
         </h:panelGrid>
         <p:commandButton value="Volver" immediate="true" action="/home?faces-redirect=true" icon="pi pi-arrow-left"/>
@@ -49,7 +49,7 @@
             <p:column headerText="Acciones">
                 <p:commandButton value="Eliminar"
                                  action="#{agenteController.deleteAgente(agenteT.id)}"
-                                 update="camionesTable"
+                                 update="agentesTable"
                                  oncomplete="PF('dlg').hide();"
                                  icon="pi pi-trash"
                                  onclick="return confirm('¿Estás seguro de que deseas eliminar este agente?');" />
@@ -60,7 +60,7 @@
         <p:dialog header="Confirmación" widgetVar="dlg" modal="true" closable="false">
             <h:outputText value="¿Estás seguro de que deseas eliminar este agente?" />
             <p:commandButton value="Sí"
-                             action="#{camionController.deleteCamion(agenteT.id)}"
+                             action="#{agenteController.deleteAgente(agenteT.id)}"
                              update="agentesTable"
                              oncomplete="PF('dlg').hide();" />
             <p:commandButton value="No" onclick="PF('dlg').hide();" type="button" />

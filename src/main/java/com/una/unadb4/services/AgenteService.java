@@ -17,7 +17,7 @@ public class AgenteService extends Service<Agente> {
         EntityManager em = Persistence.createEntityManagerFactory(persistence).createEntityManager();
         try {
             em.getTransaction().begin();
-            List<Agente> agentes = em.createQuery("SELECT c FROM camiones c", Agente.class).getResultList();
+            List<Agente> agentes = em.createQuery("SELECT c FROM agentes c", Agente.class).getResultList();
             em.getTransaction().commit();
             return agentes;
         } catch (Exception e) {
@@ -38,7 +38,7 @@ public class AgenteService extends Service<Agente> {
         }
     }
 
-    // Método para almacenar un nuevo camión en la base de datos
+    // Método para almacenar un nuevo agente en la base de datos
     @Transactional
     public void store(Agente agente) throws Exception {
         EntityManager em = Persistence.createEntityManagerFactory(persistence).createEntityManager();

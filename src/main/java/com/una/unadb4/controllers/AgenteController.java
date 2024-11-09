@@ -21,7 +21,7 @@ import java.util.logging.Logger;
 public class AgenteController implements Serializable {
 
     private Agente agente; // Camión actual en el formulario
-    private List<Agente> agentes; // Lista de todos los camiones
+    private List<Agente> agentes; // Lista de todos los agentes
     private final AgenteService agenteService; // Servicio para operaciones CRUD
     private final Logger logger;
 
@@ -37,7 +37,7 @@ public class AgenteController implements Serializable {
         try {
             this.agentes = agenteService.getAll();
             System.out.println(this.agentes);
-            //addMessage(FacesMessage.SEVERITY_ERROR, "Error", "Algo"+this.camiones.get(0).getBrand());
+            //addMessage(FacesMessage.SEVERITY_ERROR, "Error", "Algo"+this.agentes.get(0).getBrand());
         } catch (Exception e) {
             logger.log(Level.SEVERE, "Error al cargar los agentes", e);
             addMessage(FacesMessage.SEVERITY_ERROR, "Error", "No se pudieron cargar los agentesf.");

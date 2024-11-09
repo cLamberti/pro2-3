@@ -2,13 +2,14 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 <h:head>
-    <title>Editar Camión</title>
+    <title>Editar Agente</title>
 </h:head>
 <h:body>
     <h:form>
-        <h1>Editar Camión</h1>
+        <h1>Editar Agente</h1>
 
         <p:messages autoUpdate="true" />
 
@@ -17,19 +18,23 @@
             <h:outputText for="id" value="Cedula:" />
             <h:outputText id="id" value="#{agenteController.agente.id}"/>
 
-            <h:outputLabel for="name" value="NumeroUnidad:" />
+            <h:outputLabel for="name" value="Nombre:" />
             <p:inputText id="name" value="#{agenteController.agente.name}" required="true" />
 
-            <h:outputLabel for="lastname" value="Marca:" />
+            <h:outputLabel for="lastname" value="Apellidos:" />
             <p:inputText id="lastname" value="#{agenteController.agente.lastname}" required="true" />
 
-            <h:outputLabel for="agentType" value="Color:" />
-            <p:inputText id="agentType" value="#{agenteController.agente.agentType}" required="true" />
+            <h:outputLabel for="agentType" value="Tipo:" />
+            <p:selectOneMenu id="agentType" value="#{agenteController.agente.agentType}" required="true">
+                <f:selectItem itemLabel="Seleccione tipo" itemValue="" noSelectionOption="true" />
+                <f:selectItem itemLabel="Conductor" itemValue="Conductor" />
+                <f:selectItem itemLabel="Escolta" itemValue="Escolta" />
+            </p:selectOneMenu>
 
-            <h:outputLabel for="photo" value="Modelo:" />
+            <h:outputLabel for="photo" value="Foto:" />
             <p:inputText id="photo" value="#{agenteController.agente.photo}" required="true" />
 
-            <h:outputLabel for="filename" value="Tipo:" />
+            <h:outputLabel for="filename" value="Nombre Foto:" />
             <p:inputText id="filename" value="#{agenteController.agente.filename}" required="true" />
 
         </h:panelGrid>
