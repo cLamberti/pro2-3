@@ -17,7 +17,7 @@ public class AgenteService extends Service<Agente> {
         EntityManager em = Persistence.createEntityManagerFactory(persistence).createEntityManager();
         try {
             em.getTransaction().begin();
-            List<Agente> agentes = em.createQuery("SELECT c FROM camiones c", Camion.class).getResultList();
+            List<Agente> agentes = em.createQuery("SELECT c FROM camiones c", Agente.class).getResultList();
             em.getTransaction().commit();
             return agentes;
         } catch (Exception e) {
