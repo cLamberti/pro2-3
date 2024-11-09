@@ -10,58 +10,58 @@
     <h:form>
 
         <h:panelGrid columns="2">
-            <h:outputLabel value="Lista de Camiones" for="camionesTable" />
-            <p:commandButton value="Actualizar" action="#{camionController.loadCamiones()}" update="camionesTable" icon="pi pi-refresh"/>
+            <h:outputLabel value="Lista de Camiones" for="agentesTable" />
+            <p:commandButton value="Actualizar" action="#{agenteController.loadAgentes()}" update="agentesTable" icon="pi pi-refresh"/>
         </h:panelGrid>
         <p:commandButton value="Volver" immediate="true" action="/home?faces-redirect=true" icon="pi pi-arrow-left"/>
 
-        <p:dataTable id="camionesTable" value="#{camionController.camiones}" var="camionT" striped="true" hover="true">
+        <p:dataTable id="agentesTable" value="#{agenteController.agentes}" var="agenteT" striped="true" hover="true">
 
-            <p:column headerText="Placa">
-                <h:outputText value="#{camionT.licensePlate}" />
+            <p:column headerText="Cedula">
+                <h:outputText value="#{agenteT.id}" />
             </p:column>
 
-            <p:column headerText="Número de Unidad">
-                <h:outputText value="#{camionT.unitNumber}" />
+            <p:column headerText="Nombre">
+                <h:outputText value="#{agenteT.name}" />
             </p:column>
 
-            <p:column headerText="Marca">
-                <h:outputText value="#{camionT.brand}" />
-            </p:column>
-
-            <p:column headerText="Color">
-                <h:outputText value="#{camionT.color}" />
-            </p:column>
-
-            <p:column headerText="Modelo">
-                <h:outputText value="#{camionT.model}" />
+            <p:column headerText="Apellidos">
+                <h:outputText value="#{agenteT.lastname}" />
             </p:column>
 
             <p:column headerText="Tipo">
-                <h:outputText value="#{camionT.type}" />
+                <h:outputText value="#{agenteT.agentType}" />
+            </p:column>
+
+            <p:column headerText="Foto">
+                <h:outputText value="#{agenteT.photo}" />
+            </p:column>
+
+            <p:column headerText="Nombre Foto">
+                <h:outputText value="#{agenteT.filename}" />
             </p:column>
 
             <p:column headerText="Editar">
                 <p:commandButton value="Editar"
-                                 action="#{camionController.setEdit(camionT)}"
+                                 action="#{agenteController.setEdit(agenteT)}"
                                  icon="pi pi-user-edit"/>
             </p:column>
             <p:column headerText="Acciones">
                 <p:commandButton value="Eliminar"
-                                 action="#{camionController.deleteCamion(camionT.licensePlate)}"
+                                 action="#{agenteController.deleteAgente(agenteT.id)}"
                                  update="camionesTable"
                                  oncomplete="PF('dlg').hide();"
                                  icon="pi pi-trash"
-                                 onclick="return confirm('¿Estás seguro de que deseas eliminar este camión?');" />
+                                 onclick="return confirm('¿Estás seguro de que deseas eliminar este agente?');" />
             </p:column>
 
         </p:dataTable>
 
         <p:dialog header="Confirmación" widgetVar="dlg" modal="true" closable="false">
-            <h:outputText value="¿Estás seguro de que deseas eliminar este camión?" />
+            <h:outputText value="¿Estás seguro de que deseas eliminar este agente?" />
             <p:commandButton value="Sí"
-                             action="#{camionController.deleteCamion(camionT.licensePlate)}"
-                             update="camionesTable"
+                             action="#{camionController.deleteCamion(agenteT.id)}"
+                             update="agentesTable"
                              oncomplete="PF('dlg').hide();" />
             <p:commandButton value="No" onclick="PF('dlg').hide();" type="button" />
         </p:dialog>

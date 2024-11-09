@@ -15,26 +15,26 @@
         <h:panelGrid columns="2" cellpadding="5">
 
             <h:outputLabel for="id" value="Cedula:" />
-            <p:inputText id="id" value="#{agenteController.agentes.licensePlate}" required="true" />
+            <p:inputText id="id" value="#{agenteController.agente.id}" required="true" />
 
-            <h:outputLabel for="numero_unidad" value="NumeroUnidad:" />
-            <p:inputText id="numero_unidad" value="#{camionController.camion.unitNumber}" required="true" />
+            <h:outputLabel for="name" value="Nombre:" />
+            <p:inputText id="name" value="#{agenteController.agente.name}" required="true" />
 
-            <h:outputLabel for="marca" value="Marca:" />
-            <p:inputText id="marca" value="#{camionController.camion.brand}" required="true" />
+            <h:outputLabel for="lastname" value="Apellidos:" />
+            <p:inputText id="lastname" value="#{agenteController.agente.lastname}" required="true" />
 
-            <h:outputLabel for="color" value="Color:" />
-            <p:inputText id="color" value="#{camionController.camion.color}" required="true" />
+            <h:outputLabel for="agentType" value="Tipo:" />
+            <p:inputText id="agentType" value="#{agenteController.agente.agentType}" required="true" />
 
-            <h:outputLabel for="modelo" value="Modelo:" />
-            <p:inputText id="modelo" value="#{camionController.camion.model}" required="true" />
+            <h:outputLabel for="photo" value="Foto:" />
+            <p:inputText id="photo" value="#{agenteController.agente.photo}" required="true" />
 
-            <h:outputLabel for="tipo" value="Tipo:" />
-            <p:inputText id="tipo" value="#{camionController.camion.type}" required="true" />
+            <h:outputLabel for="filename" value="Nombre Foto:" />
+            <p:inputText id="filename" value="#{agenteController.agente.filename}" required="true" />
 
         </h:panelGrid>
         <p:commandButton value="Volver" immediate="true" action="/home?faces-redirect=true" icon="pi pi-arrow-left"/>
-        <p:commandButton value="Guardar Camión" action="#{camionController.saveCamion()}" update="@form" icon="pi pi-save"/>
+        <p:commandButton value="Guardar Agente" action="#{agenteController.saveAgente()}" update="@form" icon="pi pi-save"/>
 
     </h:form>
 </h:body>

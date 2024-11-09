@@ -90,7 +90,7 @@ public class AgenteController implements Serializable {
 
     public String backList(){
         loadAgentes();
-        return "/cagente/list-camion?faces-redirect=true";
+        return "/agente/list-agente?faces-redirect=true";
     }
 
 
