@@ -11,11 +11,9 @@
 
         <h:panelGrid columns="2">
             <h:outputLabel value="Lista de Camiones" for="camionesTable" />
-            <p:commandButton value="Actualizar" action="#{camionController.loadCamiones()}" update="camionesTable" />
+            <p:commandButton value="Actualizar" action="#{camionController.loadCamiones()}" update="camionesTable" icon="pi pi-refresh"/>
         </h:panelGrid>
-        <p:commandButton value="Agregar"
-                         action="#{camionController.setAdd()}"
-                         icon="pi pi-edit"/>
+        <p:commandButton value="Volver" immediate="true" action="/home?faces-redirect=true" icon="pi pi-arrow-left"/>
 
         <p:dataTable id="camionesTable" value="#{camionController.camiones}" var="camionT" striped="true" hover="true">
 
@@ -46,7 +44,7 @@
             <p:column headerText="Editar">
                 <p:commandButton value="Editar"
                                  action="#{camionController.setEdit(camionT)}"
-                                 icon="pi pi-edit"/>
+                                 icon="pi pi-user-edit"/>
             </p:column>
             <p:column headerText="Acciones">
                 <p:commandButton value="Eliminar"
