@@ -49,7 +49,6 @@ public class CamionController implements Serializable {
         try {
             camionService.store(camion);
             addMessage(FacesMessage.SEVERITY_INFO, "Éxito", "Camión guardado correctamente.");
-            return this.backList();
         } catch (Exception e) {
             logger.log(Level.SEVERE, "Error al guardar el camión", e);
             addMessage(FacesMessage.SEVERITY_ERROR, "Error", "No se pudo guardar el camión.");
