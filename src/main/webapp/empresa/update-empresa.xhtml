@@ -14,27 +14,18 @@
 
         <h:panelGrid columns="2" cellpadding="5">
 
-            <h:outputText for="placa" value="Placa:" />
-            <h:outputText id="placa" value="#{camionController.camion.licensePlate}"/>
+            <h:outputText for="companyName" value="Placa:" />
+            <h:outputText id="companyName" value="#{empresaController.empresa.companyName}"/>
 
-            <h:outputLabel for="numero_unidad" value="NumeroUnidad:" />
-            <p:inputText id="numero_unidad" value="#{camionController.camion.unitNumber}" required="true" />
+            <h:outputLabel for="address" value="Direccion:" />
+            <p:inputText id="address" value="#{empresaController.empresa.address}" required="true" />
 
-            <h:outputLabel for="marca" value="Marca:" />
-            <p:inputText id="marca" value="#{camionController.camion.brand}" required="true" />
-
-            <h:outputLabel for="color" value="Color:" />
-            <p:inputText id="color" value="#{camionController.camion.color}" required="true" />
-
-            <h:outputLabel for="modelo" value="Modelo:" />
-            <p:inputText id="modelo" value="#{camionController.camion.model}" required="true" />
-
-            <h:outputLabel for="tipo" value="Tipo:" />
-            <p:inputText id="tipo" value="#{camionController.camion.type}" required="true" />
+            <h:outputLabel for="contact" value="Contacto:" />
+            <p:inputText id="contact" value="#{empresaController.empresa.contact}" required="true" />
 
         </h:panelGrid>
-        <p:commandButton value="Volver" immediate="true" action="#{camionController.backList}" icon="pi pi-arrow-left"/>
-        <p:commandButton value="Guardar Camión" action="#{camionController.updateCamion()}" update="@form" icon="pi pi-save"/>
+        <p:commandButton value="Volver" immediate="true" action="#{empresaController.backList}" icon="pi pi-arrow-left"/>
+        <p:commandButton value="Guardar Camión" action="#{empresaController.updateEmpresa()}" update="@form" icon="pi pi-save"/>
     </h:form>
 </h:body>
 </html>

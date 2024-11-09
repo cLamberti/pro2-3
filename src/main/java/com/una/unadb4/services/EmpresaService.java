@@ -1,11 +1,9 @@
 package com.una.unadb4.services;
 
-import com.una.unadb4.models.Agente;
 import com.una.unadb4.models.Empresa;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
-import jakarta.transaction.Transactional;
 
 import java.util.List;
 
@@ -79,21 +77,14 @@ public class EmpresaService extends Service<Empresa> {
 
     @Override
     public void update(Empresa empresa) throws Exception {
-        EntityManagerFactory emf =Persistence.createEntityManagerFactory(persistence);
-        EntityManager em = emf.createEntityManager();
+        EntityManager em = Persistence.createEntityManagerFactory(persistence).createEntityManager();
         try {
             em.getTransaction().begin();
-            Empresa emp = em.find(Empresa.class, empresa.getId());
-            if (emp != null) {
-                emp.setId(empresa.getId());
-                emp.setCompanyName(empresa.getCompanyName());
-                emp.setAddress(empresa.getAddress());
-                emp.setContact(empresa.getContact());
-                em.getTransaction().commit();
-            }
+            em.merge(empresa);
+            em.getTransaction().commit();
         } catch (Exception e) {
             em.getTransaction().rollback();
-            e.printStackTrace();
+            throw e;
         } finally {
             em.close();
         }

@@ -4,64 +4,52 @@
       xmlns:p="http://primefaces.org/ui">
 
 <h:head>
-    <title>Listado de Camiones</title>
+    <title>Listado de Empresas</title>
 </h:head>
 <h:body>
     <h:form>
 
         <h:panelGrid columns="2">
-            <h:outputLabel value="Lista de Camiones" for="camionesTable" />
-            <p:commandButton value="Actualizar" action="#{camionController.loadCamiones()}" update="camionesTable" icon="pi pi-refresh"/>
+            <h:outputLabel value="Lista de Empresas" for="empresasTable" />
+            <p:commandButton value="Actualizar" action="#{empresaController.loadEmpresas()}" update="empresasTable" icon="pi pi-refresh"/>
         </h:panelGrid>
         <p:commandButton value="Volver" immediate="true" action="/home?faces-redirect=true" icon="pi pi-arrow-left"/>
 
-        <p:dataTable id="camionesTable" value="#{camionController.camiones}" var="camionT" striped="true" hover="true">
+        <p:dataTable id="empresasTable" value="#{empresaController.empresas}" var="empresaT" striped="true" hover="true">
 
-            <p:column headerText="Placa">
-                <h:outputText value="#{camionT.licensePlate}" />
+            <p:column headerText="Nombre">
+                <h:outputText value="#{empresaT.companyName}" />
             </p:column>
 
-            <p:column headerText="Número de Unidad">
-                <h:outputText value="#{camionT.unitNumber}" />
+            <p:column headerText="Direccion">
+                <h:outputText value="#{empresaT.address}" />
             </p:column>
 
-            <p:column headerText="Marca">
-                <h:outputText value="#{camionT.brand}" />
-            </p:column>
-
-            <p:column headerText="Color">
-                <h:outputText value="#{camionT.color}" />
-            </p:column>
-
-            <p:column headerText="Modelo">
-                <h:outputText value="#{camionT.model}" />
-            </p:column>
-
-            <p:column headerText="Tipo">
-                <h:outputText value="#{camionT.type}" />
+            <p:column headerText="Contacto">
+                <h:outputText value="#{empresaT.contact}" />
             </p:column>
 
             <p:column headerText="Editar">
                 <p:commandButton value="Editar"
-                                 action="#{camionController.setEdit(camionT)}"
+                                 action="#{empresaController.setEdit(empresaT)}"
                                  icon="pi pi-user-edit"/>
             </p:column>
             <p:column headerText="Acciones">
                 <p:commandButton value="Eliminar"
-                                 action="#{camionController.deleteCamion(camionT.licensePlate)}"
-                                 update="camionesTable"
+                                 action="#{empresaController.deleteEmpresa(empresaT.companyName)}"
+                                 update="empresasTable"
                                  oncomplete="PF('dlg').hide();"
                                  icon="pi pi-trash"
-                                 onclick="return confirm('¿Estás seguro de que deseas eliminar este camión?');" />
+                                 onclick="return confirm('¿Estás seguro de que deseas eliminar esta empresa?');" />
             </p:column>
 
         </p:dataTable>
 
         <p:dialog header="Confirmación" widgetVar="dlg" modal="true" closable="false">
-            <h:outputText value="¿Estás seguro de que deseas eliminar este camión?" />
+            <h:outputText value="¿Estás seguro de que deseas eliminar esta empresa?" />
             <p:commandButton value="Sí"
-                             action="#{camionController.deleteCamion(camionT.licensePlate)}"
-                             update="camionesTable"
+                             action="#{empresaController.deleteEmpresa(empresaT.companyName)}"
+                             update="empresasTable"
                              oncomplete="PF('dlg').hide();" />
             <p:commandButton value="No" onclick="PF('dlg').hide();" type="button" />
         </p:dialog>

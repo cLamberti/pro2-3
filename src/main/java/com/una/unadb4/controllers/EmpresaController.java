@@ -1,5 +1,6 @@
 package com.una.unadb4.controllers;
 
+import com.una.unadb4.models.Camion;
 import com.una.unadb4.models.Empresa;
 import com.una.unadb4.services.EmpresaService;
 import jakarta.enterprise.inject.Model;
@@ -22,10 +23,11 @@ public class EmpresaController implements Serializable {
     private final EmpresaService empresaService; // Servicio para operaciones CRUD
     private final Logger logger;
 
-    public EmpresaController() {
+    public EmpresaController() throws Exception {
         this.empresaService = new EmpresaService();
         this.empresa = new Empresa();
         this.logger = Logger.getLogger(this.getClass().getName());
+        this.empresaService.getAll();
         loadEmpresas(); // Carga inicial de todas las empresas
     }
 
@@ -44,7 +46,7 @@ public class EmpresaController implements Serializable {
         try {
             empresaService.store(empresa);
             addMessage(FacesMessage.SEVERITY_INFO, "Éxito", "Empresa guardada correctamente.");
-            this.empresa = new Empresa(); // Reinicia el formulario
+            empresa = new Empresa(); // Reinicia el formulario
             loadEmpresas(); // Recarga la lista de empresas
         } catch (Exception e) {
             logger.log(Level.SEVERE, "Error al guardar la empresa", e);
@@ -53,15 +55,16 @@ public class EmpresaController implements Serializable {
     }
 
     // Método para actualizar una empresa existente
-    public void updateEmpresa() {
+    public String updateEmpresa() {
         try {
             empresaService.update(empresa);
-            addMessage(FacesMessage.SEVERITY_INFO, "Éxito", "Empresa actualizada correctamente.");
-            loadEmpresas(); // Recarga la lista de empresas
+            addMessage(FacesMessage.SEVERITY_INFO, "Éxito", "Camión actualizado correctamente.");
+            return this.backList();
         } catch (Exception e) {
-            logger.log(Level.SEVERE, "Error al actualizar la empresa", e);
-            addMessage(FacesMessage.SEVERITY_ERROR, "Error", "No se pudo actualizar la empresa.");
+            logger.log(Level.SEVERE, "Error al actualizar el camión", e);
+            addMessage(FacesMessage.SEVERITY_ERROR, "Error", "No se pudo actualizar el camión.");
         }
+        return null;
     }
 
     // Método para eliminar una empresa por su ID
@@ -74,6 +77,16 @@ public class EmpresaController implements Serializable {
             logger.log(Level.SEVERE, "Error al eliminar la empresa", e);
             addMessage(FacesMessage.SEVERITY_ERROR, "Error", "No se pudo eliminar la empresa.");
         }
+    }
+
+    public String setEdit(Empresa empresa) {
+        this.empresa = empresa;
+        return "update-empresa?faces-redirect=true";
+    }
+
+    public String backList(){
+        loadEmpresas();
+        return "/empresa/list-empresa?faces-redirect=true";
     }
 
     // Método para mostrar mensajes en la interfaz
