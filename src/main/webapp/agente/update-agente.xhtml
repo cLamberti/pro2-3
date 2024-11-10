@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <title>Editar Agente</title>
+</h:head>
+<h:body>
+    <h:form id="addForm" enctype="multipart/form-data">
+        <h1>Editar Agente</h1>
+
+        <p:messages autoUpdate="true" />
+
+        <h:panelGrid columns="2" cellpadding="5">
+
+            <h:outputText for="id" value="Cedula:" />
+            <h:outputText id="id" value="#{agenteController.agente.id}"/>
+
+            <h:outputLabel for="name" value="Nombre:" />
+            <p:inputText id="name" value="#{agenteController.agente.name}" required="true" />
+
+            <h:outputLabel for="lastname" value="Apellidos:" />
+            <p:inputText id="lastname" value="#{agenteController.agente.lastname}" required="true" />
+
+            <h:outputLabel for="agentType" value="Tipo:" />
+            <p:selectOneMenu id="agentType" value="#{agenteController.agente.agentType}" required="true">
+                <f:selectItem itemLabel="Seleccione tipo" itemValue="" noSelectionOption="true" />
+                <f:selectItem itemLabel="Conductor" itemValue="Conductor" />
+                <f:selectItem itemLabel="Escolta" itemValue="Escolta" />
+            </p:selectOneMenu>
+
+            <h:outputLabel for="photo" value="Foto:" />
+            <p:fileUpload id="photo" mode="simple" listener="#{agenteController.handleUpload}"
+                          fileLimit="1" auto="true" allowTypes="/(\.|\/)(png|jpeg|jpg|gif)$/"
+            />
+
+        </h:panelGrid>
+        <p:commandButton value="Volver" immediate="true" action="#{agenteController.backList}" icon="pi pi-arrow-left"/>
+        <p:commandButton value="Guardar CamiÃ³n" action="#{agenteController.updateAgente()}" update="@form" icon="pi pi-save"/>
+    </h:form>
+</h:body>
+</html>
