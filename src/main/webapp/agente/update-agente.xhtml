@@ -8,7 +8,7 @@
     <title>Editar Agente</title>
 </h:head>
 <h:body>
-    <h:form>
+    <h:form id="addForm" enctype="multipart/form-data">
         <h1>Editar Agente</h1>
 
         <p:messages autoUpdate="true" />
@@ -32,10 +32,9 @@
             </p:selectOneMenu>
 
             <h:outputLabel for="photo" value="Foto:" />
-            <p:inputText id="photo" value="#{agenteController.agente.photo}" required="true" />
-
-            <h:outputLabel for="filename" value="Nombre Foto:" />
-            <p:inputText id="filename" value="#{agenteController.agente.filename}" required="true" />
+            <p:fileUpload id="photo" mode="simple" listener="#{agenteController.handleUpload}"
+                          fileLimit="1" auto="true" allowTypes="/(\.|\/)(png|jpeg|jpg|gif)$/"
+            />
 
         </h:panelGrid>
         <p:commandButton value="Volver" immediate="true" action="#{agenteController.backList}" icon="pi pi-arrow-left"/>

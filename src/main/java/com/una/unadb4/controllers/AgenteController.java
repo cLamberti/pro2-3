@@ -9,12 +9,15 @@ import jakarta.faces.application.FacesMessage;
 import jakarta.faces.context.FacesContext;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Named;
+import org.primefaces.event.FileUploadEvent;
+import org.primefaces.model.file.UploadedFile;
 
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.Base64;
 
 @Model
 @SessionScoped
@@ -24,6 +27,8 @@ public class AgenteController implements Serializable {
     private List<Agente> agentes; // Lista de todos los agentes
     private final AgenteService agenteService; // Servicio para operaciones CRUD
     private final Logger logger;
+    private String tempFilename;
+    private byte[] tempFile;
 
     public AgenteController() throws Exception { // HOLA
         this.agenteService = new AgenteService();
@@ -44,9 +49,19 @@ public class AgenteController implements Serializable {
         }
     }
 
+    public void handleUpload(FileUploadEvent event){
+        this.tempFilename=event.getFile().getFileName();
+        this.tempFile=event.getFile().getContent();
+        addMessage(FacesMessage.SEVERITY_ERROR, "INFO", "Archivo "+tempFilename+" subido");
+    }
+
     // Método para guardar un nuevo agente
     public String saveAgente() {
         try {
+            if(this.tempFile!=null){
+                agente.setPhoto(this.tempFile);
+                agente.setFilename(this.tempFilename);
+            }
             agenteService.store(agente);
             addMessage(FacesMessage.SEVERITY_INFO, "Éxito", "Agente guardado correctamente.");
             agente = new Agente();
@@ -54,6 +69,13 @@ public class AgenteController implements Serializable {
         } catch (Exception e) {
             logger.log(Level.SEVERE, "Error al guardar el agente", e);
             addMessage(FacesMessage.SEVERITY_ERROR, "Error", "No se pudo guardar el agente.");
+        }
+        return null;
+    }
+
+    public String getPhotoAsBase64(Agente agentePhoto) {
+        if (agentePhoto.getPhoto() != null) {
+            return Base64.getEncoder().encodeToString(agentePhoto.getPhoto());
         }
         return null;
     }

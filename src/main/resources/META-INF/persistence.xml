@@ -2,6 +2,7 @@
 <persistence xmlns="https://jakarta.ee/xml/ns/persistence" version="3.1">
     <persistence-unit name="my_persistence_unit" transaction-type="RESOURCE_LOCAL">
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+        <class>com.una.unadb4.models.User</class>
         <class>com.una.unadb4.models.Camion</class>
         <class>com.una.unadb4.models.Remesa</class>
         <class>com.una.unadb4.models.Empresa</class>

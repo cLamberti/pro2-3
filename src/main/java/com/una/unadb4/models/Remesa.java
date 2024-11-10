@@ -2,14 +2,13 @@ package com.una.unadb4.models;
 
 import com.una.unadb4.models.Agente;
 import com.una.unadb4.models.Camion;
+import com.una.unadb4.models.User;
 import jakarta.faces.view.ViewScoped;
 import jakarta.inject.Named;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 
 import java.io.Serializable;
+import java.util.List;
 
 @Named
 @ViewScoped
@@ -17,9 +16,6 @@ import java.io.Serializable;
 public class Remesa implements Serializable {
     @Id
     private int id;
-
-    @Column(name = "tipo")
-    private String type; // "Entrega" o "Envío"
 
     @Column(name = "fecha")
     private String date;
@@ -30,27 +26,24 @@ public class Remesa implements Serializable {
     @Column(name = "estado")
     private String status; // "Solicitada", "Autorizada", etc.
 
-    @ManyToOne
+    @OneToMany
+    private List<Agente> agente;
+
+    @OneToOne
     private Camion camion;
 
-    @ManyToOne
-    private Agente agente;
+    @OneToOne
+    private Empresa empresa;
 
-    // Getters y Setters
+    @OneToOne
+    private User user;
+
     public int getId() {
         return id;
     }
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
     }
 
     public String getDate() {
@@ -77,6 +70,14 @@ public class Remesa implements Serializable {
         this.status = status;
     }
 
+    public List<Agente> getAgente() {
+        return agente;
+    }
+
+    public void setAgente(List<Agente> agente) {
+        this.agente = agente;
+    }
+
     public Camion getCamion() {
         return camion;
     }
@@ -85,12 +86,22 @@ public class Remesa implements Serializable {
         this.camion = camion;
     }
 
-    public Agente getAgente() {
-        return agente;
+    public Empresa getEmpresa() {
+        return empresa;
     }
 
-    public void setAgente(Agente agente) {
-        this.agente = agente;
+    public void setEmpresa(Empresa empresa) {
+        this.empresa = empresa;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }
+    // Getters y Setters
+
 

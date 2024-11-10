@@ -34,8 +34,9 @@
             </p:column>
 
             <p:column headerText="Foto">
-                <h:outputText value="#{agenteT.photo}" />
+                <p:graphicImage value="data:image/jpeg;base64,#{agenteController.getPhotoAsBase64(agenteT)}" />
             </p:column>
+
 
             <p:column headerText="Nombre Foto">
                 <h:outputText value="#{agenteT.filename}" />

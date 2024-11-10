@@ -1,121 +1,45 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- saveCamion.xhtml -->
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
-<f:view>
-    <f:event type="preRenderView" listener="#{remesaController.loadRemesa()}"/>
-    <h:head>
-        <title>Actualizar Remesa - SGR - Remmitance Trucks CR</title>
-        <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-        <meta http-equiv="Content-Type" content="text/html" charset="utf-8"/>
-    </h:head>
-    <h:body>
-        <div id="wrapper" style="width: 90%;margin: 0 auto;">
-            <div id="headerPage">
-                <div> <!--Encabezado-->
-                    <p:panelGrid id="header" style="width: 100%;">
-                        <p:row>
-                            <p:column style="width: 70%;margin: 0px auto;border: none;">
-                                <h:graphicImage library="images" name="una.png" style="width: 100px;display: block;margin-left:15px;"/>
-                            </p:column>
-                            <p:column style="width: 30%;border: none;">
-                                <h2 style="display: block;margin-right: 10px;">Sistema de Gestión de Remesas</h2>
-                            </p:column>
-                        </p:row>
-                    </p:panelGrid>
-                </div>
-                <div> <!--Inicio Menu-->
-                    <h:form>
-                        <p:menubar>
-                            <p:submenu label="Remesas">
-                                <p:menuitem value="Listar" action="/remesa/list-remesa?faces-redirect=true"/>
-                                <p:menuitem value="Nueva" action="/remesa/add-remesa?faces-redirect=true"/>
-                            </p:submenu>
-                            <p:submenu label="Agentes">
-                                <p:menuitem value="Listar" action="/agente/list-agentes?faces-redirect=true"/>
-                                <p:menuitem value="Nuevo" action="/agente/add-agente?faces-redirect=true"/>
-                            </p:submenu>
-                            <p:submenu label="Camiones">
-                                <p:menuitem value="Listar" action="/camion/list-camiones?faces-redirect=true"/>
-                                <p:menuitem value="Nuevo" action="/camion/add-camion?faces-redirect=true"/>
-                            </p:submenu>
-                            <p:submenu label="Empresas">
-                                <p:menuitem value="Listar" action="/empresa/list-empresas?faces-redirect=true"/>
-                                <p:menuitem value="Nueva" action="/empresa/add-empresa?faces-redirect=true"/>
-                            </p:submenu>
-                            <p:submenu label="Informes" rendered="#{userLogged.admin}">
-                                <p:menuitem value="Remesas por Agente" action="/reports/remesas-by-agente?faces-redirect=true"/>
-                                <p:menuitem value="Camiones Utilizados" action="/reports/camiones-utilizados?faces-redirect=true"/>
-                                <p:menuitem value="Empresas por Remesa" action="/reports/empresas-by-remesa?faces-redirect=true"/>
-                            </p:submenu>
+<h:head>
+    <title>Editar Camión</title>
+</h:head>
+<h:body>
+    <h:form>
+        <h1>Editar Camión</h1>
 
-                            <f:facet name="options">
-                                <p:commandLink value="#{userLogged.username}" action="#{userController.logout()}"/>
-                            </f:facet>
-                        </p:menubar>
-                    </h:form>
-                </div> <!--Fin Menu-->
-            </div>
-            <div id="contentPage"> <!--Inicia el contenido-->
-                <h4>Actualización de Remesa</h4>
-                <h:form id="updateForm" style="width: 80%;margin: 5px auto">
-                    <p:growl id="msg" life="3000" showDetail="true"/>
-                    <div class="ui-fluid p-formgrid p-grid">
-                        <div class="p-field p-col-12">
-                            <p:outputLabel value="Identificación" for="id"/>
-                            <p:inputText id="id" value="#{remesaController.remesa.id}" disabled="true"/>
-                        </div>
-                        <div class="p-field p-col-12">
-                            <p:outputLabel value="Tipo" for="type"/>
-                            <p:inputText id="type" value="#{remesaController.remesa.type}" required="true" requiredMessage="Campo obligatorio"/>
-                            <h:message for="type"/>
-                        </div>
-                        <div class="p-field p-col-12">
-                            <p:outputLabel value="Fecha" for="date"/>
-                            <p:inputText id="date" value="#{remesaController.remesa.date}" required="true" requiredMessage="Campo obligatorio"/>
-                            <h:message for="date"/>
-                        </div>
-                        <div class="p-field p-col-12">
-                            <p:outputLabel value="Hora" for="time"/>
-                            <p:inputText id="time" value="#{remesaController.remesa.time}" required="true" requiredMessage="Campo obligatorio"/>
-                            <h:message for="time"/>
-                        </div>
-                        <div class="p-field p-col-12">
-                            <p:outputLabel value="Estado" for="status"/>
-                            <p:inputText id="status" value="#{remesaController.remesa.status}" required="true" requiredMessage="Campo obligatorio"/>
-                            <h:message for="status"/>
-                        </div>
-                        <div class="p-field p-col-12">
-                            <p:outputLabel value="Camión" for="camion"/>
-                            <p:inputText id="camion" value="#{remesaController.remesa.camion.licensePlate}" required="true" requiredMessage="Campo obligatorio"/>
-                            <h:message for="camion"/>
-                        </div>
-                        <div class="p-field p-col-12">
-                            <p:outputLabel value="Agente" for="agente"/>
-                            <p:inputText id="agente" value="#{remesaController.remesa.agente.name}" required="true" requiredMessage="Campo obligatorio"/>
-                            <h:message for="agente"/>
-                        </div>
-                        <p:panelGrid id="btnPanel" style="width: 100%">
-                            <p:row>
-                                <p:column style="width: 45%;border: none"/>
-                                <p:column style="width: 10%;border: none">
-                                    <p:commandButton value="Guardar" styleClass="ui-button blue-bg"
-                                                     action="#{remesaController.updateRemesa()}" update="msg"/>
-                                </p:column>
-                                <p:column style="width: 45%;border: none"/>
-                            </p:row>
-                        </p:panelGrid>
-                    </div>
-                </h:form>
-            </div> <!--fin del contenido-->
-            <div id="footerPage">
-                <hr/>
-                <p>&copy;2024 Universidad Nacional. Todos los derechos reservados</p>
-            </div>
-        </div>
-    </h:body>
-</f:view>
+        <p:messages autoUpdate="true" />
+
+        <h:panelGrid columns="2" cellpadding="5">
+
+            <h:outputText for="placa" value="Placa:" />
+            <h:outputText id="placa" value="#{camionController.camion.licensePlate}"/>
+
+            <h:outputLabel for="numero_unidad" value="NumeroUnidad:" />
+            <p:inputText id="numero_unidad" value="#{camionController.camion.unitNumber}" required="true" />
+
+            <h:outputLabel for="marca" value="Marca:" />
+            <p:inputText id="marca" value="#{camionController.camion.brand}" required="true" />
+
+            <h:outputLabel for="color" value="Color:" />
+            <p:inputText id="color" value="#{camionController.camion.color}" required="true" />
+
+            <h:outputLabel for="modelo" value="Modelo:" />
+            <p:inputText id="modelo" value="#{camionController.camion.model}" required="true" />
+
+            <h:outputLabel for="tipo" value="Tipo:" />
+            <p:selectOneMenu id="tipo" value="#{camionController.camion.type}" required="true">
+                <f:selectItem itemLabel="Seleccione tipo" itemValue="" noSelectionOption="true" />
+                <f:selectItem itemLabel="Blindado" itemValue="Blindado" />
+                <f:selectItem itemLabel="Ligero" itemValue="Ligero" />
+            </p:selectOneMenu>
+
+        </h:panelGrid>
+        <p:commandButton value="Volver" immediate="true" action="#{camionController.backList}" icon="pi pi-arrow-left"/>
+        <p:commandButton value="Guardar Camión" action="#{camionController.updateCamion()}" update="@form" icon="pi pi-save"/>
+    </h:form>
+</h:body>
 </html>

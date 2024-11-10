@@ -1,6 +1,7 @@
 package com.una.unadb4.controllers;
 
 import com.una.unadb4.models.User;
+import com.una.unadb4.services.UserService;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.faces.application.FacesMessage;
 import jakarta.inject.Named;
@@ -17,9 +18,12 @@ public class UserController {
         }
         return user;
     }
+
     public String login(){
-        if(this.user.getUsername().equals("admin") && this.user.getPassword().equals("admin")){
-            this.user.setAdmin(true);
+        UserService userService = new UserService();
+        User userCheck = userService.checkCredentials(getUser().getUsername(), getUser().getPassword());
+        if(userCheck!=null){
+            this.user = userCheck;
             FacesContext.getCurrentInstance().getExternalContext()
                     .getSessionMap().put("userLogged", this.user);
             return "/home?faces-redirect=true";
