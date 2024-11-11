@@ -1,13 +1,68 @@
-<!-- saveAgente.xhtml -->
-<!DOCTYPE html>
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 <h:head>
-    <title>Guardar Agente</title>
+    <title>New Agent - SGA - Remmitance Trucks CR</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+    <meta http-equiv="Content-Type" content="text/html" charset="utf-8"/>
 </h:head>
 <h:body>
+    <div id="wrapper" style="width: 90%;margin: 0 auto;">
+    <div id="headerPage">
+        <div> <!--Encabezado-->
+            <p:panelGrid id="header" style="width: 100%;">
+                <p:row>
+                    <p:column style="width: 70%;margin: 0px auto;border: none;">
+                        <h:graphicImage library="images" name="logos.png" style="width: 250px;display: block;margin-left:15px;"/>
+                    </p:column>
+                    <p:column style="width: 30%;border: none;">
+                        <h2 style="display: block;margin-right: 10px;">Sistema de Gestión de Agentes
+                            de Remmitance Trucks CR</h2>
+                    </p:column>
+                </p:row>
+            </p:panelGrid>
+        </div>
+        <div> <!--Inicio Menu-->
+            <h:form>
+                <p:menubar>
+                    <p:submenu label="Remesas" rendered="#{!userLogged.admin}">
+                        <p:menuitem value="Listar" action="/remesa/list-remesa?faces-redirect=true"/>
+                        <p:menuitem value="Nueva" action="/remesa/add-remesa?faces-redirect=true"/>
+                    </p:submenu>
+                    <p:submenu label="Agentes" rendered="#{userLogged.admin}">
+                        <p:menuitem value="Listar" action="/agente/list-agentes?faces-redirect=true"/>
+                        <p:menuitem value="Nuevo" action="/agente/add-agente?faces-redirect=true"/>
+                    </p:submenu>
+                    <p:submenu label="Camiones" rendered="#{userLogged.admin}">
+                        <p:menuitem value="Listar" action="/camion/list-camion?faces-redirect=true"/>
+                        <p:menuitem value="Nuevo" action="/camion/add-camion?faces-redirect=true"/>
+                    </p:submenu>
+                    <p:submenu label="Empresas" rendered="#{userLogged.admin}">
+                        <p:menuitem value="Listar" action="/empresa/list-empresa?faces-redirect=true"/>
+                        <p:menuitem value="Nueva" action="/empresa/add-empresa?faces-redirect=true"/>
+                    </p:submenu>
+                    <p:submenu label="Usuarios" rendered="#{userLogged.admin}"> <!--NO TE OLVIDES-->
+                        <p:menuitem value="Listar" action="/empresa/list-empresa?faces-redirect=true"/>
+                        <p:menuitem value="Nueva" action="/empresa/add-empresa?faces-redirect=true"/>
+                    </p:submenu>
+                    <p:submenu label="Informes" rendered="#{userLogged.admin}">
+                        <p:menuitem value="Remesas por Agente" action="/reports/remesas-by-agente?faces-redirect=true"/>
+                        <p:menuitem value="Camiones Utilizados" action="/reports/camiones-utilizados?faces-redirect=true"/>
+                        <p:menuitem value="Empresas por Remesa" action="/reports/empresas-by-remesa?faces-redirect=true"/>
+                    </p:submenu>
+
+                    <f:facet name="options">
+                        <p:commandLink value="#{userLogged.username}" action="#{userController.logout()}"/>
+                    </f:facet>
+                </p:menubar>
+            </h:form>
+        </div> <!--Fin Menu-->
+    </div>
+    <div id="contentPage"> <!--Inicia el contenido-->
     <h:form id="addForm" enctype="multipart/form-data">
         <h1>Registrar Nuevo Agente</h1>
 
@@ -41,5 +96,11 @@
         <p:commandButton value="Guardar Agente" action="#{agenteController.saveAgente()}" update="@form" icon="pi pi-save"/>
 
     </h:form>
+    </div> <!--fin del contenido-->
+        <div id="footerPage">
+            <hr/>
+            <p>&copy;2024 Remmitance Trucks CR. Todos los derechos reservados</p>
+        </div>
+    </div>
 </h:body>
 </html>
