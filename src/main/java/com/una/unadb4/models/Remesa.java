@@ -26,8 +26,7 @@ public class Remesa implements Serializable {
     @Column(name = "estado")
     private String status; // "Solicitada", "Autorizada", etc.
 
-    @OneToMany
-    private List<Agente> agente;
+
 
     @OneToOne
     private Camion camion;
@@ -70,13 +69,7 @@ public class Remesa implements Serializable {
         this.status = status;
     }
 
-    public List<Agente> getAgente() {
-        return agente;
-    }
 
-    public void setAgente(List<Agente> agente) {
-        this.agente = agente;
-    }
 
     public Camion getCamion() {
         return camion;

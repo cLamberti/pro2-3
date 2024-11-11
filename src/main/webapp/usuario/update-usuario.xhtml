@@ -22,7 +22,7 @@
             <p:inputText id="password" value="#{userController.user.password}" required="true" />
 
             <h:outputLabel for="admin" value="Privilegios:" />
-            <p:selectOneMenu id="admin" value="#{userController.user.admin}" required="true">
+            <p:selectOneMenu id="admin" value="#{userController.user.admin}">
                 <f:selectItem itemLabel="Seleccione tipo" itemValue="" noSelectionOption="true" />
                 <f:selectItem itemLabel="Administrador" itemValue="true" />
                 <f:selectItem itemLabel="Cliente" itemValue="false" />

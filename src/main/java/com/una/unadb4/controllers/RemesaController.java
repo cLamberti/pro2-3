@@ -1,7 +1,13 @@
 package com.una.unadb4.controllers;
 
+import com.una.unadb4.models.Agente;
+import com.una.unadb4.models.Camion;
+import com.una.unadb4.models.Empresa;
 import com.una.unadb4.models.Remesa;
 import com.una.unadb4.models.User;
+import com.una.unadb4.services.AgenteService;
+import com.una.unadb4.services.CamionService;
+import com.una.unadb4.services.EmpresaService;
 import com.una.unadb4.services.RemesaService;
 import jakarta.annotation.Nonnull;
 import jakarta.enterprise.inject.Model;
@@ -20,8 +26,11 @@ import java.util.logging.Logger;
 @ViewScoped
 public class RemesaController implements Serializable {
 
-    private Remesa newRemesa;
-    private List<Remesa> remesas; // Lista de todas las remesas
+    private Remesa remesa;
+    private List<Remesa> remesas;
+    private List<Camion> camiones;
+    private List<Empresa> empresas;
+    private List<Agente> agentes;// Lista de todas las remesas
     private RemesaService remesaService; // Servicio para operaciones CRUD
     private Logger logger;
     User userLogged;
@@ -31,6 +40,38 @@ public class RemesaController implements Serializable {
         this.remesaService = new RemesaService();
         this.logger = Logger.getLogger(this.getClass().getName());
         this.remesas = new ArrayList<>();
+        //loadRemesas();
+        loadCamiones();
+        loadEmpresas();
+        loadAgentes();
+
+    }
+
+    public void loadCamiones() {
+        try {
+            CamionService camionService = new CamionService();
+            this.camiones = camionService.getAll();
+        }catch (Exception e) {
+            logger.log(Level.WARNING, "Error al cargar las remesas", e);
+        }
+    }
+
+    public void loadEmpresas() {
+        try {
+            EmpresaService empresaService = new EmpresaService();
+            this.empresas = empresaService.getAll();
+        }catch (Exception e) {
+            logger.log(Level.WARNING, "Error al cargar las remesas", e);
+        }
+    }
+
+    public void loadAgentes() {
+        try {
+            AgenteService agenteService = new AgenteService();
+            this.agentes = agenteService.getAll();
+        }catch (Exception e) {
+            logger.log(Level.WARNING, "Error al cargar las remesas", e);
+        }
     }
 
     public void loadRemesas() {
@@ -46,59 +87,69 @@ public class RemesaController implements Serializable {
             }
         } catch (Exception e) {
             logger.log(Level.WARNING, "Error al cargar las remesas", e);
-            this.addMessage(e.getMessage());
+            addMessage(FacesMessage.SEVERITY_ERROR, "Error", "No se pudieron cargar la remesa.");
         }
     }
 
-    public String saveRemesa(@Nonnull Remesa remesa) {
-        Object id = FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("id");
-        logger.info("Guardando nueva remesa");
+    public String saveRemesa() {
         try {
             remesaService.store(remesa);
-            return "/remesa/list-remesa?faces-redirect=true";
+            addMessage(FacesMessage.SEVERITY_INFO, "Éxito", "Remesa guardado correctamente.");
+            remesa = new Remesa();
+            loadRemesas();
         } catch (Exception e) {
-            logger.log(Level.WARNING, "Error al guardar la remesa", e);
-            addMessage(e.getMessage());
-            return null;
+            logger.log(Level.SEVERE, "Error al guardar la remesa", e);
+            addMessage(FacesMessage.SEVERITY_ERROR, "Error", "No se pudo guardar la remesa.");
         }
+        return null;
     }
 
-    public void updateRemesa(@Nonnull Remesa remesa) {
+    public String updateRemesa() {
         try {
             remesaService.update(remesa);
-            this.addMessage("Exito remesa actualizada correctamente.");
+            addMessage(FacesMessage.SEVERITY_INFO, "Éxito", "Remesa actualizado correctamente.");
+            return this.backList();
         } catch (Exception e) {
-            logger.log(Level.WARNING, "Error al actualizar la remesa", e);
-            addMessage(e.getMessage());
+            logger.log(Level.SEVERE, "Error al actualizar la Remesa", e);
+            addMessage(FacesMessage.SEVERITY_ERROR, "Error", "No se pudo actualizar la remesa.");
         }
+        return null;
     }
 
-    public String deleteRemesa(@Nonnull String id) {
+    public void deleteRemesa(String id) {
         try {
-            int Sid = Integer.parseInt(id);
-            Remesa aux = remesaService.getById(Sid);
             remesaService.delete(id);
-            this.addMessage("Éxito, Remesa eliminada correctamente.");
-            return "/home?faces-redirect=true";
+            addMessage(FacesMessage.SEVERITY_INFO, "Éxito", "Remesa eliminado correctamente.");
+            loadRemesas(); // Recarga la lista
         } catch (Exception e) {
-            logger.log(Level.WARNING, "Error al eliminar la remesa", e);
-            addMessage(e.getMessage());
-            return null;
+            logger.log(Level.SEVERE, "Error al eliminar la remesa", e);
+            addMessage(FacesMessage.SEVERITY_ERROR, "Error", "No se pudo eliminar la remesa.");
         }
     }
 
-    private void addMessage(String message) {
-        FacesMessage msg = new FacesMessage( message);
-        FacesContext.getCurrentInstance().addMessage(null,msg);
+    public String setEdit(Remesa remesa) {
+        this.remesa = remesa;
+        return "update-remesa?faces-redirect=true";
+    }
+
+    public String backList(){
+        loadRemesas();
+        return "/remesa/list-remesa?faces-redirect=true";
+    }
+
+
+    // Método para mostrar mensajes en la interfaz
+    private void addMessage(FacesMessage.Severity severity, String summary, String detail) {
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(severity, summary, detail));
     }
 
     // Getters y Setters
     public Remesa getRemesa() {
-        return newRemesa;
+        return remesa;
     }
 
-    public void setRemesa(Remesa remesa) {
-        this.newRemesa = remesa;
+    public void setEmpresa(Remesa remesa) {
+        this.remesa = remesa;
     }
 
     public List<Remesa> getRemesas() {
@@ -107,5 +158,29 @@ public class RemesaController implements Serializable {
 
     public void setRemesas(List<Remesa> remesas) {
         this.remesas = remesas;
+    }
+
+    public List<Camion> getCamiones() {
+        return camiones;
+    }
+
+    public void setCamiones(List<Camion> camiones) {
+        this.camiones = camiones;
+    }
+
+    public List<Empresa> getEmpresas() {
+        return empresas;
+    }
+
+    public void setEmpresas(List<Empresa> empresas) {
+        this.empresas = empresas;
+    }
+
+    public List<Agente> getAgentes() {
+        return agentes;
+    }
+
+    public void setAgentes(List<Agente> agentes) {
+        this.agentes = agentes;
     }
 }

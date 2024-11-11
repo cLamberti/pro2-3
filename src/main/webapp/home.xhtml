@@ -46,11 +46,12 @@
                                 <p:menuitem value="Listar" action="/empresa/list-empresa?faces-redirect=true"/>
                                 <p:menuitem value="Nueva" action="/empresa/add-empresa?faces-redirect=true"/>
                             </p:submenu>
-                            <p:submenu label="Usuarios" rendered="#{userLogged.admin}"> <!--NO TE OLVIDES-->
+                            <p:submenu label="Usuarios" rendered="#{userLogged.admin}">
                                 <p:menuitem value="Listar" action="/usuario/list-usuario?faces-redirect=true"/>
                                 <p:menuitem value="Nueva" action="/usuario/add-usuario?faces-redirect=true"/>
                             </p:submenu>
                             <p:submenu label="Informes" rendered="#{userLogged.admin}">
+                                <p:menuitem value="Agregar Remesa" action="/remesa/add-remesa?faces-redirect=true"/>
                                 <p:menuitem value="Remesas por Agente" action="/reports/remesas-by-agente?faces-redirect=true"/>
                                 <p:menuitem value="Camiones Utilizados" action="/reports/camiones-utilizados?faces-redirect=true"/>
                                 <p:menuitem value="Empresas por Remesa" action="/reports/empresas-by-remesa?faces-redirect=true"/>

@@ -1,6 +1,5 @@
 package com.una.unadb4.controllers;
 
-import com.una.unadb4.models.Empresa;
 import com.una.unadb4.models.User;
 import com.una.unadb4.services.UserService;
 import jakarta.enterprise.context.SessionScoped;
@@ -38,9 +37,8 @@ public class UserController implements Serializable {
         UserService userService = new UserService();
         User userCheck = userService.checkCredentials(getUser().getUserName(), getUser().getPassword());
         if(userCheck!=null){
-            this.user = userCheck;
             FacesContext.getCurrentInstance().getExternalContext()
-                    .getSessionMap().put("userLogged", this.user);
+                    .getSessionMap().put("userLogged", userCheck);
             return "/home?faces-redirect=true";
         }else{
             FacesMessage fMsg=new FacesMessage("Usuario o contraseña invalido");
@@ -69,7 +67,7 @@ public class UserController implements Serializable {
     public String saveUser() {
         try {
             userService.store(user);
-            addMessage(FacesMessage.SEVERITY_INFO, "Éxito", "Usuario guardado correctamente.");
+            addMessage(FacesMessage.SEVERITY_INFO, "Éxito", "User guardado correctamente.");
             user = new User();
             loadUsers();
         } catch (Exception e) {
@@ -123,7 +121,7 @@ public class UserController implements Serializable {
         return user;
     }
 
-    public void setUser(Empresa empresa) {
+    public void setUser(User user) {
         this.user = user;
     }
 
