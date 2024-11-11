@@ -18,10 +18,11 @@
                     <p:panelGrid id="header" style="width: 100%;">
                         <p:row>
                             <p:column style="width: 70%;margin: 0px auto;border: none;">
-                                <h:graphicImage library="images" name="una.png" style="width: 100px;display: block;margin-left:15px;"/>
+                                <h:graphicImage library="images" name="logos.png" style="width: 250px;display: block;margin-left:15px;"/>
                             </p:column>
                             <p:column style="width: 30%;border: none;">
-                                <h2 style="display: block;margin-right: 10px;">Sistema de Gestión de Remesas</h2>
+                                <h2 style="display: block;margin-right: 10px;">Sistema de Gestión
+                                de Remmitance Trucks CR</h2>
                             </p:column>
                         </p:row>
                     </p:panelGrid>
@@ -34,7 +35,7 @@
                                 <p:menuitem value="Nueva" action="/remesa/add-remesa?faces-redirect=true"/>
                             </p:submenu>
                             <p:submenu label="Agentes" rendered="#{userLogged.admin}">
-                                <p:menuitem value="Listar" action="/agente/list-agente?faces-redirect=true"/>
+                                <p:menuitem value="Listar" action="/agente/list-agentes?faces-redirect=true"/>
                                 <p:menuitem value="Nuevo" action="/agente/add-agente?faces-redirect=true"/>
                             </p:submenu>
                             <p:submenu label="Camiones" rendered="#{userLogged.admin}">
@@ -73,7 +74,7 @@
             </div> <!--fin del contenido-->
             <div id="footerPage">
                 <hr/>
-                <p>&copy;2024 Universidad Nacional. Todos los derechos reservados</p>
+                <p>&copy;2024 Remmitance Trucks CR. Todos los derechos reservados</p>
             </div>
         </div>
     </h:body>
