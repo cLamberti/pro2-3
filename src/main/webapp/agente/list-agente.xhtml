@@ -46,8 +46,8 @@
                         <p:menuitem value="Nueva" action="/empresa/add-empresa?faces-redirect=true"/>
                     </p:submenu>
                     <p:submenu label="Usuarios" rendered="#{userLogged.admin}"> <!--NO TE OLVIDES-->
-                        <p:menuitem value="Listar" action="/empresa/list-empresa?faces-redirect=true"/>
-                        <p:menuitem value="Nueva" action="/empresa/add-empresa?faces-redirect=true"/>
+                        <p:menuitem value="Listar" action="/empresa/list-usuario?faces-redirect=true"/>
+                        <p:menuitem value="Nueva" action="/empresa/add-usuario?faces-redirect=true"/>
                     </p:submenu>
                     <p:submenu label="Informes" rendered="#{userLogged.admin}">
                         <p:menuitem value="Remesas por Agente" action="/reports/remesas-by-agente?faces-redirect=true"/>
@@ -71,7 +71,8 @@
         </h:panelGrid>
         <p:commandButton value="Volver" immediate="true" action="/home?faces-redirect=true" icon="pi pi-arrow-left"/>
 
-        <p:dataTable id="agentesTable" value="#{agenteController.agentes}" var="agenteT" striped="true" hover="true">
+        <p:dataTable id="agentesTable" value="#{agenteController.agentes}" var="agenteT" striped="true" hover="true"
+        paginator="true" style="margin-bottom: 38px">
 
             <p:column headerText="Cedula">
                 <h:outputText value="#{agenteT.id}" />
@@ -90,11 +91,12 @@
             </p:column>
 
             <p:column headerText="Foto">
-                <p:graphicImage
-                        value="#{agenteController.getPhotoAsBase64(agenteT)}"
-                        alt="Foto de #{agenteT.name}"
-                        rendered="#{not empty agenteT.photo}" />
-                <h:outputText value="Sin foto" rendered="#{empty agenteT.photo}" />
+                <p:graphicImage style="width: 100%; height: 70%" cache="false"
+                        rendered = "#{empty agenteT.filename}"
+                                library="images" name = "una.png"/>
+                <p:graphicImage style="width: 100%; height: 70%" cache="false"
+                                rendered="#{not empty agenteT.filename}"
+                                library ="agents" name ="#{agenteT.filename}"/>
             </p:column>
 
 

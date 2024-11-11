@@ -46,8 +46,8 @@
                         <p:menuitem value="Nueva" action="/empresa/add-empresa?faces-redirect=true"/>
                     </p:submenu>
                     <p:submenu label="Usuarios" rendered="#{userLogged.admin}"> <!--NO TE OLVIDES-->
-                        <p:menuitem value="Listar" action="/empresa/list-empresa?faces-redirect=true"/>
-                        <p:menuitem value="Nueva" action="/empresa/add-empresa?faces-redirect=true"/>
+                        <p:menuitem value="Listar" action="/empresa/list-usuario?faces-redirect=true"/>
+                        <p:menuitem value="Nueva" action="/empresa/add-usuario?faces-redirect=true"/>
                     </p:submenu>
                     <p:submenu label="Informes" rendered="#{userLogged.admin}">
                         <p:menuitem value="Remesas por Agente" action="/reports/remesas-by-agente?faces-redirect=true"/>
@@ -64,6 +64,7 @@
     </div>
     <div id="contentPage"> <!--Inicia el contenido-->
     <h:form id="addForm" enctype="multipart/form-data">
+        <p:growl id="msg" showDetail="true" life ="3500"/>
         <h1>Registrar Nuevo Agente</h1>
 
         <p:messages autoUpdate="true" />
@@ -71,29 +72,32 @@
         <h:panelGrid columns="2" cellpadding="5">
 
             <h:outputLabel for="id" value="Cedula:" />
-            <p:inputText id="id" value="#{agenteController.agente.id}" required="true" />
+            <p:inputText id="id" value="#{agente.id}" required="true" />
 
             <h:outputLabel for="name" value="Nombre:" />
-            <p:inputText id="name" value="#{agenteController.agente.name}" required="true" />
+            <p:inputText id="name" value="#{agente.name}" required="true" />
 
             <h:outputLabel for="lastname" value="Apellidos:" />
-            <p:inputText id="lastname" value="#{agenteController.agente.lastname}" required="true" />
+            <p:inputText id="lastname" value="#{agente.lastname}" required="true" />
 
             <h:outputLabel for="agentType" value="Tipo:" />
-            <p:selectOneMenu id="agentType" value="#{agenteController.agente.agentType}" required="true">
+            <p:selectOneMenu id="agentType" value="#{agente.agentType}" required="true">
                 <f:selectItem itemLabel="Seleccione tipo" itemValue="" noSelectionOption="true" />
                 <f:selectItem itemLabel="Conductor" itemValue="Conductor" />
                 <f:selectItem itemLabel="Escolta" itemValue="Escolta" />
             </p:selectOneMenu>
 
             <h:outputLabel for="photo" value="Foto:" />
-            <p:fileUpload id="photo" mode="simple" listener="#{agenteController.handleUpload}"
-                          fileLimit="1" auto="true" allowTypes="/(\.|\/)(png|jpeg|jpg|gif)$/"
+            <p:fileUpload id="photo" mode="simple" listener="#{agenteController.tempFile}"
+                          fileLimit="1" auto="true" allowTypes="/(\.|\/)(png|jpe?g|png)$/"
+                          sizeLimit="1024000"
+                          invalidFileMessage = "Tipos de archivo invalidos"
+                          invalidSizeMessage = "Tamaño maximo 1 MB"
             />
 
         </h:panelGrid>
         <p:commandButton value="Volver" immediate="true" action="/home?faces-redirect=true" icon="pi pi-arrow-left"/>
-        <p:commandButton value="Guardar Agente" action="#{agenteController.saveAgente()}" update="@form" icon="pi pi-save"/>
+        <p:commandButton value="Guardar Agente" action="#{agenteController.saveAgente(agente)}" update="@form" icon="pi pi-save"/>
 
     </h:form>
     </div> <!--fin del contenido-->

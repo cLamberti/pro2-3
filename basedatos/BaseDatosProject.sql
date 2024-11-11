@@ -45,6 +45,7 @@ CREATE TABLE users (
 -- CREACION TABLA REMESAS
 CREATE TABLE remesas (
                          id varchar(20) NOT NULL,
+                         idAgente varchar(16) NOT NULL UNIQUE,
                          idCamion varchar(16) NOT NULL UNIQUE,
                          idEmpresa varchar(30) NOT NULL UNIQUE,
                          idUser varchar(20) NOT NULL UNIQUE,
@@ -52,20 +53,19 @@ CREATE TABLE remesas (
                          hora varchar(10) NOT NULL,
                          estado varchar(10) NOT NULL,
                          PRIMARY KEY (id),
+                         FOREIGN KEY (idAgente) REFERENCES agentes(id) ON DELETE CASCADE ON UPDATE CASCADE,
                          FOREIGN KEY (idCamion) REFERENCES camiones(licensePlate) ON DELETE CASCADE ON UPDATE CASCADE,
                          FOREIGN KEY (idEmpresa) REFERENCES empresas(companyName) ON DELETE CASCADE ON UPDATE CASCADE,
                          FOREIGN KEY (idUser) REFERENCES users(userName) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 CREATE TABLE remesa_agente (
-    idAgente varchar(11) NOT NULL,
-    idRemesa varchar(20) NOT NULL,
-    PRIMARY KEY (idAgente, idRemesa),
-    FOREIGN KEY (idAgente) REFERENCES agentes(id) ON DELETE CASCADE ON UPDATE CASCADE,
-    FOREIGN KEY (idRemesa) REFERENCES remesas(id) ON DELETE CASCADE ON UPDATE CASCADE
+                               idAgente varchar(11) NOT NULL,
+                               idRemesa varchar(20) NOT NULL,
+                               PRIMARY KEY (idAgente, idRemesa),
+                               FOREIGN KEY (idAgente) REFERENCES agentes(id) ON DELETE CASCADE ON UPDATE CASCADE,
+                               FOREIGN KEY (idRemesa) REFERENCES remesas(id) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 insert into users(userName, password, admin) values("admin" , "admin" , "1");
 insert into users(userName, password, admin) values("Santiago" , "1234" , "0")
-
-
