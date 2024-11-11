@@ -90,8 +90,14 @@
             </p:column>
 
             <p:column headerText="Foto">
-                <p:graphicImage value="data:image/jpeg;base64,#{agenteController.getPhotoAsBase64(agenteT)}" />
+                <p:graphicImage
+                        value="#{agenteController.getPhotoAsBase64(agenteT)}"
+                        alt="Foto de #{agenteT.name}"
+                        rendered="#{not empty agenteT.photo}" />
+                <h:outputText value="Sin foto" rendered="#{empty agenteT.photo}" />
             </p:column>
+
+
 
 
             <p:column headerText="Nombre Foto">

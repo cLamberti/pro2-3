@@ -21,13 +21,22 @@ public class Agente implements Serializable {
 
     @Column(name = "tipo_agente")
     private String agentType; // "Conductor" o "Escolta"
-
+    @Lob
     @Column(name = "foto",nullable = true)
     //private String photo;
     private byte[] photo; // Se almacenará la fotografía en la base de datos como un blob
 
     @Column(name="nombre_foto",nullable = true)
     private String filename;
+    public Agente() {}
+    // Constructor en Agente.java
+    public Agente(String id, String name, byte[] photo, String agentType, String filename) {
+        this.id = id;
+        this.name = name;
+        this.agentType = agentType;
+        this.photo = photo;
+        this.filename = filename;
+    }
 
     // Getters y Setters
     public String getId() {
