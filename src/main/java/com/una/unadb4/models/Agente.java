@@ -23,6 +23,7 @@ public class Agente implements Serializable {
     private String agentType; // "Conductor" o "Escolta"
 
     @Column(name = "foto",nullable = true)
+    //private String photo;
     private byte[] photo; // Se almacenará la fotografía en la base de datos como un blob
 
     @Column(name="nombre_foto",nullable = true)
@@ -61,6 +62,14 @@ public class Agente implements Serializable {
         this.agentType = agentType;
     }
 
+
+    /*public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
+    }*/
     public byte[] getPhoto() {
         return photo;
     }

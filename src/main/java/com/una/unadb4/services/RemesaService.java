@@ -27,6 +27,19 @@ public class RemesaService extends Service<Remesa> {
         }
     }
 
+    public List<Remesa> getByUser(String userName) throws Exception {
+        EntityManager em = Persistence.createEntityManagerFactory(persistence).createEntityManager();
+        try {
+            em.getTransaction().begin();
+            List<Remesa> remesas = em.createQuery("SELECT r FROM remesas r WHERE user.userName = "+userName).getResultList();
+            em.close();
+            return remesas;
+        } catch (Exception e) {
+            em.close();
+            throw e;
+        }
+    }
+
     @Override
     public Remesa getById(int id) throws Exception {
         EntityManager em = Persistence.createEntityManagerFactory(persistence).createEntityManager();
@@ -86,12 +99,13 @@ public class RemesaService extends Service<Remesa> {
             Remesa re = em.find(Remesa.class, remesa.getId());
             if (re != null) {
                 re.setId(remesa.getId());
-                re.setType(remesa.getType());
                 re.setDate(remesa.getDate());
                 re.setTime(remesa.getTime());
                 re.setStatus(remesa.getStatus());
-                re.setCamion(remesa.getCamion());
                 re.setAgente(remesa.getAgente());
+                re.setCamion(remesa.getCamion());
+                re.setEmpresa(remesa.getEmpresa());
+                re.setUser(remesa.getUser());
                 em.getTransaction().commit();
             }
         } catch (Exception e) {

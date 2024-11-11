@@ -2,6 +2,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 <h:head>
     <title>Editar Camión</title>
@@ -30,14 +31,15 @@
             <p:inputText id="modelo" value="#{camionController.camion.model}" required="true" />
 
             <h:outputLabel for="tipo" value="Tipo:" />
-            <p:inputText id="tipo" value="#{camionController.camion.type}" required="true" />
+            <p:selectOneMenu id="tipo" value="#{camionController.camion.type}" required="true">
+                <f:selectItem itemLabel="Seleccione tipo" itemValue="" noSelectionOption="true" />
+                <f:selectItem itemLabel="Blindado" itemValue="Blindado" />
+                <f:selectItem itemLabel="Ligero" itemValue="Ligero" />
+            </p:selectOneMenu>
 
         </h:panelGrid>
-        <p:commandButton value="Guardar Camión" action="#{camionController.updateCamion()}" update="@form" />
-        <p:commandButton value="Volver"
-                         immediate="true"
-                         action="#{camionController.backList}"
-                         icon="pi pi-edit"/>
+        <p:commandButton value="Volver" immediate="true" action="#{camionController.backList}" icon="pi pi-arrow-left"/>
+        <p:commandButton value="Guardar Camión" action="#{camionController.updateCamion()}" update="@form" icon="pi pi-save"/>
     </h:form>
 </h:body>
 </html>

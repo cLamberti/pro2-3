@@ -1,58 +1,31 @@
+<!-- saveCamion.xhtml -->
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui">
-
 <h:head>
-    <title>Modificar Empresas</title>
+    <title>Editar Camión</title>
 </h:head>
 <h:body>
     <h:form>
-        <h:panelGrid columns="2">
-            <h:outputLabel value="Lista de Empresas" for="empresasTable" />
+        <h1>Editar Camión</h1>
+
+        <p:messages autoUpdate="true" />
+
+        <h:panelGrid columns="2" cellpadding="5">
+
+            <h:outputText for="companyName" value="Placa:" />
+            <h:outputText id="companyName" value="#{empresaController.empresa.companyName}"/>
+
+            <h:outputLabel for="address" value="Direccion:" />
+            <p:inputText id="address" value="#{empresaController.empresa.address}" required="true" />
+
+            <h:outputLabel for="contact" value="Contacto:" />
+            <p:inputText id="contact" value="#{empresaController.empresa.contact}" required="true" />
+
         </h:panelGrid>
-        <p:dataTable id="empresasTable" value="#{empresaController.empresas}" var="empresa" selection="#{empresaController.empresa}" rowKey="#{empresa.companyName}"
-                     selectionMode="single"
-                     onRowSelect="PF('editDialog').show()">
-
-            <p:column headerText="Nombre">
-                <h:outputText value="#{empresa.companyName}" />
-            </p:column>
-
-            <p:column headerText="Direccion">
-                <h:outputText value="#{empresa.address}" />
-            </p:column>
-
-            <p:column headerText="Contacto">
-                <h:outputText value="#{empresa.contact}" />
-            </p:column>
-
-        </p:dataTable>
-
-        <p:dialog header="Modificar Empresas" widgetVar="editDialog" modal="true" closable="false">
-            <h:panelGrid columns="2">
-
-                <h:outputLabel for="companyName" value="Nombre:" />
-                <p:inputText id="companyName" value="#{empresaController.empresa.companyName}" required="true" />
-
-                <h:outputLabel for="address" value="Direccion:" />
-                <p:inputText id="address" value="#{empresaController.empresa.address}" required="true" />
-
-                <h:outputLabel for="contact" value="Contacto:" />
-                <p:inputText id="contact" value="#{empresaController.empresa.contact}" required="true" />
-
-            </h:panelGrid>
-
-            <p:commandButton value="Actualizar"
-                             action="#{empresaController.updateEmpresa()}"
-                             update=":empresasTable"
-                             oncomplete="PF('editDialog').hide();"
-                             icon="pi pi-check" />
-
-            <p:commandButton value="Cancelar" onclick="PF('editDialog').hide();" type="button" />
-        </p:dialog>
-
+        <p:commandButton value="Volver" immediate="true" action="#{empresaController.backList}" icon="pi pi-arrow-left"/>
+        <p:commandButton value="Guardar Camión" action="#{empresaController.updateEmpresa()}" update="@form" icon="pi pi-save"/>
     </h:form>
-
 </h:body>
 </html>

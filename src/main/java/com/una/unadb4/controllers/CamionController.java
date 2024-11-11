@@ -49,7 +49,8 @@ public class CamionController implements Serializable {
         try {
             camionService.store(camion);
             addMessage(FacesMessage.SEVERITY_INFO, "Éxito", "Camión guardado correctamente.");
-            return this.backList();
+            camion = new Camion();
+            loadCamiones();
         } catch (Exception e) {
             logger.log(Level.SEVERE, "Error al guardar el camión", e);
             addMessage(FacesMessage.SEVERITY_ERROR, "Error", "No se pudo guardar el camión.");
@@ -87,24 +88,11 @@ public class CamionController implements Serializable {
         return "update-camion?faces-redirect=true";
     }
 
-    public String setAdd(){
-        this.camion = new Camion();
-        return "add-camion?faces-redirect=true";
-    }
-
     public String backList(){
         loadCamiones();
         return "/camion/list-camion?faces-redirect=true";
     }
 
-    public void backList2() {
-        loadCamiones();
-        try {
-            FacesContext.getCurrentInstance().getExternalContext().redirect("list-camion.xhtml");
-        } catch (IOException e) {
-            logger.log(Level.SEVERE, "Error al redirigir a la lista de camiones", e);
-        }
-    }
 
     // Método para mostrar mensajes en la interfaz
     private void addMessage(FacesMessage.Severity severity, String summary, String detail) {

@@ -1,69 +1,19 @@
 <!-- saveCamion.xhtml -->
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 <h:head>
-    <title>Nuevo Camion - SGR - Remmitance Trucks CR</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-    <meta http-equiv="Content-Type" content="text/html" charset="utf-8"/>
+    <title>Guardar Camión</title>
 </h:head>
 <h:body>
-    <div id="wrapper" style="width: 90%;margin: 0 auto;">
-    <div id="headerPage">
-    <div> <!--Encabezado-->
-        <p:panelGrid id="header" style="width: 100%;">
-            <p:row>
-                <p:column style="width: 70%;margin: 0px auto;border: none;">
-                    <h:graphicImage library="images" name="una.png" style="width: 100px;display: block;margin-left:15px;"/>
-                </p:column>
-                <p:column style="width: 30%;border: none;">
-                    <h2 style="display: block;margin-right: 10px;">Sistema de Gestión de Remesas</h2>
-                </p:column>
-            </p:row>
-        </p:panelGrid>
-    </div> <!-- Fin encabezado -->
-    <div> <!--Inicio Menu-->
-        <h:form>
-            <p:menubar>
-                <p:submenu label="Remesas">
-                    <p:menuitem value="Listar" action="/remesa/list-remesa?faces-redirect=true"/>
-                    <p:menuitem value="Nueva" action="/remesa/add-remesa?faces-redirect=true"/>
-                </p:submenu>
-                <p:submenu label="Agentes">
-                    <p:menuitem value="Listar" action="/agente/list-agentes?faces-redirect=true"/>
-                    <p:menuitem value="Nuevo" action="/agente/add-agente?faces-redirect=true"/>
-                </p:submenu>
-                <p:submenu label="Camiones">
-                    <p:menuitem value="Listar" action="/camion/list-camion?faces-redirect=true"/>
-                    <p:menuitem value="Nuevo" action="/camion/add-camion?faces-redirect=true"/>
-                </p:submenu>
-                <p:submenu label="Empresas">
-                    <p:menuitem value="Listar" action="/empresa/list-empresas?faces-redirect=true"/>
-                    <p:menuitem value="Nueva" action="/empresa/add-empresa?faces-redirect=true"/>
-                </p:submenu>
-                <p:submenu label="Informes" rendered="#{userLogged.admin}">
-                    <p:menuitem value="Remesas por Agente" action="/reports/remesas-by-agente?faces-redirect=true"/>
-                    <p:menuitem value="Camiones Utilizados" action="/reports/camiones-utilizados?faces-redirect=true"/>
-                    <p:menuitem value="Empresas por Remesa" action="/reports/empresas-by-remesa?faces-redirect=true"/>
-                </p:submenu>
-
-                <f:facet name="options">
-                    <p:commandLink value="#{userLogged.username}" action="#{userController.logout()}"/>
-                </f:facet>
-            </p:menubar>
-        </h:form>
-    </div> <!--Fin Menu-->
-    </div>
-    <div id="contentPage"> <!--Inicia el contenido-->
     <h:form>
         <h1>Registrar Nuevo Camión</h1>
 
         <p:messages autoUpdate="true" />
 
-        <h:panelGrid id="content" style="width: 100%" columns="2" cellpadding="5">
+        <h:panelGrid columns="2" cellpadding="5">
 
             <h:outputLabel for="placa" value="Placa:" />
             <p:inputText id="placa" value="#{camionController.camion.licensePlate}" required="true" />
@@ -81,20 +31,16 @@
             <p:inputText id="modelo" value="#{camionController.camion.model}" required="true" />
 
             <h:outputLabel for="tipo" value="Tipo:" />
-            <p:inputText id="tipo" value="#{camionController.camion.type}" required="true" />
+            <p:selectOneMenu id="tipo" value="#{camionController.camion.type}" required="true">
+                <f:selectItem itemLabel="Seleccione tipo" itemValue="" noSelectionOption="true" />
+                <f:selectItem itemLabel="Blindado" itemValue="Blindado" />
+                <f:selectItem itemLabel="Ligero" itemValue="Ligero" />
+            </p:selectOneMenu>
 
         </h:panelGrid>
-        <p:commandButton value="Guardar Camión" action="#{camionController.saveCamion()}" update="@form" />
-        <p:commandButton value="Volver"
-                         immediate="true"
-                         action="#{camionController.backList}"
-                         icon="pi pi-edit"/>
+        <p:commandButton value="Volver" immediate="true" action="/home?faces-redirect=true" icon="pi pi-arrow-left"/>
+        <p:commandButton value="Guardar Camión" action="#{camionController.saveCamion()}" update="@form" icon="pi pi-save"/>
+
     </h:form>
-    </div>
-        <div id="footerPage">
-            <hr/>
-            <p>&copy;2024 Universidad Nacional. Todos los derechos reservados</p>
-        </div>
-    </div>
 </h:body>
 </html>

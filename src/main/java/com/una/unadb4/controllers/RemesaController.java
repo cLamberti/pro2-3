@@ -24,8 +24,10 @@ public class RemesaController implements Serializable {
     private List<Remesa> remesas; // Lista de todas las remesas
     private RemesaService remesaService; // Servicio para operaciones CRUD
     private Logger logger;
+    User userLogged;
 
     public RemesaController() {
+        userLogged = (User) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("userLogged");
         this.remesaService = new RemesaService();
         this.logger = Logger.getLogger(this.getClass().getName());
         this.remesas = new ArrayList<>();
@@ -35,7 +37,13 @@ public class RemesaController implements Serializable {
         logger.log(Level.INFO, "Loading remesas");
         this.remesas.clear();
         try {
-            this.remesas = remesaService.getAll();
+            if(userLogged!=null) {
+                if(userLogged.isAdmin()) {
+                    this.remesas = remesaService.getAll();
+                }else{
+                    this.remesas = remesaService.getByUser(userLogged.getUsername());
+                }
+            }
         } catch (Exception e) {
             logger.log(Level.WARNING, "Error al cargar las remesas", e);
             this.addMessage(e.getMessage());

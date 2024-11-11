@@ -2,41 +2,45 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
 <h:head>
     <title>Guardar Remesa</title>
 </h:head>
 <h:body>
     <h:form>
-        <h1>Registrar Nueva Remesa</h1>
+        <h1>Registrar Nuevo Camión</h1>
 
         <p:messages autoUpdate="true" />
 
         <h:panelGrid columns="2" cellpadding="5">
 
-            <h:outputLabel for="id" value="ID:" />
-            <p:inputText id="id" value="#{remesaController.remesa.id}" required="true" />
+            <h:outputLabel for="placa" value="Placa:" />
+            <p:inputText id="placa" value="#{camionController.camion.licensePlate}" required="true" />
 
-            <h:outputLabel for="type" value="tipo:" />
-            <p:inputText id="type" value="#{remesaController.remesa.type}" required="true" />
+            <h:outputLabel for="numero_unidad" value="NumeroUnidad:" />
+            <p:inputText id="numero_unidad" value="#{camionController.camion.unitNumber}" required="true" />
 
-            <h:outputLabel for="date" value="fecha:" />
-            <p:inputText id= "date" value="#{remesaController.remesa.date}" required="true" />
+            <h:outputLabel for="marca" value="Marca:" />
+            <p:inputText id="marca" value="#{camionController.camion.brand}" required="true" />
 
-            <h:outputLabel for="time" value="Hora:" />
-            <p:inputText id="time" value="#{remesaController.remesa.time}" required="true" />
+            <h:outputLabel for="color" value="Color:" />
+            <p:inputText id="color" value="#{camionController.camion.color}" required="true" />
 
-            <h:outputLabel for="status" value="Estado:" />
-            <p:inputText id="status" value="#{remesaController.remesa.status}" required="true" />
+            <h:outputLabel for="modelo" value="Modelo:" />
+            <p:inputText id="modelo" value="#{camionController.camion.model}" required="true" />
 
-            <h:outputLabel for="camion" value="Camion placa:" />
-            <p:inputText id="camion" value="#{remesaController.remesa.camion}" required="true" />
-
-            <h:outputLabel for="agente" value="Agente ID: " />
-            <p:inputText id="agente" value="#{remesaController.remesa.agente}" required="true" />
+            <h:outputLabel for="tipo" value="Tipo:" />
+            <p:selectOneMenu id="tipo" value="#{camionController.camion.type}" required="true">
+                <f:selectItem itemLabel="Seleccione tipo" itemValue="" noSelectionOption="true" />
+                <f:selectItem itemLabel="Blindado" itemValue="Blindado" />
+                <f:selectItem itemLabel="Ligero" itemValue="Ligero" />
+            </p:selectOneMenu>
 
         </h:panelGrid>
-        <p:commandButton value="Guardar Remesa" action="#{remesaController.saveRemesa}" update="@form" />
+        <p:commandButton value="Volver" immediate="true" action="/home?faces-redirect=true" icon="pi pi-arrow-left"/>
+        <p:commandButton value="Guardar Camión" action="#{camionController.saveCamion()}" update="@form" icon="pi pi-save"/>
+
     </h:form>
 </h:body>
 </html>

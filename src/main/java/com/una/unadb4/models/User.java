@@ -12,7 +12,7 @@ import java.io.Serializable;
 
 @Named
 @ViewScoped
-@Entity(name = "userdb")
+@Entity(name = "users")
 public class User implements Serializable {
     @Id
     private String userName;
