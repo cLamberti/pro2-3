@@ -1,99 +1,71 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui">
-<f:view>
-    <f:event type="preRenderView" listener="#{agenteController.loadAgentes()}"/>
-    <h:head>
-        <title>Lista de Agentes - SGA</title>
-        <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-        <meta http-equiv="Content-Type" content="text/html" charset="utf-8"/>
-    </h:head>
-    <h:body>
-        <div id="wrapper" style="width: 90%;margin: 0 auto;">
-            <div id="headerPage">
-                <div> <!--Encabezado-->
-                    <p:panelGrid id="header" style="width: 100%;">
-                        <p:row>
-                            <p:column style="width: 70%;margin: 0px auto;border: none;">
-                                <h:graphicImage library="images" name="una.png" style="width: 100px;display: block;margin-left:15px;"/>
-                            </p:column>
-                            <p:column style="width: 30%;border: none;">
-                                <h2 style="display: block;margin-right: 10px;">Lista Agentes - SGR - Remmitance Trucks CR</h2>
-                            </p:column>
-                        </p:row>
-                    </p:panelGrid>
-                </div>
-                <div> <!--Inicio Menu-->
-                    <h:form>
-                        <p:menubar>
-                            <p:submenu label="Remesas">
-                                <p:menuitem value="Listar" action="/remesa/list-remesa?faces-redirect=true"/>
-                                <p:menuitem value="Nueva" action="/remesa/add-remesa?faces-redirect=true"/>
-                            </p:submenu>
-                            <p:submenu label="Agentes">
-                                <p:menuitem value="Listar" action="/agente/list-agentes?faces-redirect=true"/>
-                                <p:menuitem value="Nuevo" action="/agente/add-agente?faces-redirect=true"/>
-                            </p:submenu>
-                            <p:submenu label="Camiones">
-                                <p:menuitem value="Listar" action="/camion/list-camiones?faces-redirect=true"/>
-                                <p:menuitem value="Nuevo" action="/camion/add-camion?faces-redirect=true"/>
-                            </p:submenu>
-                            <p:submenu label="Empresas">
-                                <p:menuitem value="Listar" action="/empresa/list-empresas?faces-redirect=true"/>
-                                <p:menuitem value="Nueva" action="/empresa/add-empresa?faces-redirect=true"/>
-                            </p:submenu>
-                            <p:submenu label="Informes" rendered="#{userLogged.admin}">
-                                <p:menuitem value="Remesas por Agente" action="/reports/remesas-by-agente?faces-redirect=true"/>
-                                <p:menuitem value="Camiones Utilizados" action="/reports/camiones-utilizados?faces-redirect=true"/>
-                                <p:menuitem value="Empresas por Remesa" action="/reports/empresas-by-remesa?faces-redirect=true"/>
-                            </p:submenu>
 
-                            <f:facet name="options">
-                                <p:commandLink value="#{userLogged.username}" action="#{userController.logout()}"/>
-                            </f:facet>
-                        </p:menubar>
-                    </h:form>
-                </div> <!--Fin Menu-->
-            </div>
-            <div id="contentPage"> <!--Inicia el contenido-->
-                <p:growl id="msg" showDetail="true" life="3000"/>
-                <h3>Lista de Remesas</h3>
-                <p:dataTable id="tbAgentes" value="#{agenteController.agentes}" var="age">
-                    <p:column headerText="ID">
-                        <h:outputText value="#{age.id}"/>
-                    </p:column>
-                    <p:column headerText="Nombre">
-                        <h:outputText value="#{age.name}"/>
-                    </p:column>
-                    <p:column headerText="Apellidos">
-                        <h:outputText value="#{age.lastname}"/>
-                    </p:column>
-                    <p:column headerText="Tipo Agente">
-                        <h:outputText value="#{age.agentType}"/>
-                    </p:column>
-                    <p:column headerText="Foto">
-                        <p:graphicImage value="#{age.photo}" width="50" height="50" alt="Photo"/>
-                    </p:column>
-                    <p:column headerText="Acciones">
-                        <h:form>
-                            <p:linkButton icon="fa fa-edit" outcome="/remesa/update-remesa">
-                                <f:param name="id" value="#{rem.id}"/>
-                            </p:linkButton>
-                            ||
-                            <p:commandButton icon="fa fa-trash" action="#{remesaController.deleteRemesa(rem.id)}" update="msg"/>
-                        </h:form>
-                    </p:column>
-                </p:dataTable>
-            </div> <!--fin del contenido-->
-            <div id="footerPage">
-                <hr/>
-                <p>&copy;2024 Universidad Nacional. Todos los derechos reservados</p>
-            </div>
-        </div>
-    </h:body>
-</f:view>
+<h:head>
+    <title>Listado de Agentes</title>
+</h:head>
+<h:body>
+    <h:form>
+
+        <h:panelGrid columns="2">
+            <h:outputLabel value="Lista de Agentes" for="agentesTable" />
+            <p:commandButton value="Actualizar" action="#{agenteController.loadAgentes()}" update="agentesTable" icon="pi pi-refresh"/>
+        </h:panelGrid>
+        <p:commandButton value="Volver" immediate="true" action="/home?faces-redirect=true" icon="pi pi-arrow-left"/>
+
+        <p:dataTable id="agentesTable" value="#{agenteController.agentes}" var="agenteT" striped="true" hover="true">
+
+            <p:column headerText="Cedula">
+                <h:outputText value="#{agenteT.id}" />
+            </p:column>
+
+            <p:column headerText="Nombre">
+                <h:outputText value="#{agenteT.name}" />
+            </p:column>
+
+            <p:column headerText="Apellidos">
+                <h:outputText value="#{agenteT.lastname}" />
+            </p:column>
+
+            <p:column headerText="Tipo">
+                <h:outputText value="#{agenteT.agentType}" />
+            </p:column>
+
+            <p:column headerText="Foto">
+                <p:graphicImage value="data:image/jpeg;base64,#{agenteController.getPhotoAsBase64(agenteT)}" />
+            </p:column>
+
+
+            <p:column headerText="Nombre Foto">
+                <h:outputText value="#{agenteT.filename}" />
+            </p:column>
+
+            <p:column headerText="Editar">
+                <p:commandButton value="Editar"
+                                 action="#{agenteController.setEdit(agenteT)}"
+                                 icon="pi pi-user-edit"/>
+            </p:column>
+            <p:column headerText="Acciones">
+                <p:commandButton value="Eliminar"
+                                 action="#{agenteController.deleteAgente(agenteT.id)}"
+                                 update="agentesTable"
+                                 oncomplete="PF('dlg').hide();"
+                                 icon="pi pi-trash"
+                                 onclick="return confirm('¿Estás seguro de que deseas eliminar este agente?');" />
+            </p:column>
+
+        </p:dataTable>
+
+        <p:dialog header="Confirmación" widgetVar="dlg" modal="true" closable="false">
+            <h:outputText value="¿Estás seguro de que deseas eliminar este agente?" />
+            <p:commandButton value="Sí"
+                             action="#{agenteController.deleteAgente(agenteT.id)}"
+                             update="agentesTable"
+                             oncomplete="PF('dlg').hide();" />
+            <p:commandButton value="No" onclick="PF('dlg').hide();" type="button" />
+        </p:dialog>
+    </h:form>
+</h:body>
 </html>
