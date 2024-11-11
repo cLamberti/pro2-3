@@ -46,8 +46,8 @@
                                 <p:menuitem value="Nueva" action="/empresa/add-empresa?faces-redirect=true"/>
                             </p:submenu>
                             <p:submenu label="Usuarios" rendered="#{userLogged.admin}"> <!--NO TE OLVIDES-->
-                                <p:menuitem value="Listar" action="/empresa/list-empresa?faces-redirect=true"/>
-                                <p:menuitem value="Nueva" action="/empresa/add-empresa?faces-redirect=true"/>
+                                <p:menuitem value="Listar" action="/usuario/list-usuario?faces-redirect=true"/>
+                                <p:menuitem value="Nueva" action="/usuario/add-usuario?faces-redirect=true"/>
                             </p:submenu>
                             <p:submenu label="Informes" rendered="#{userLogged.admin}">
                                 <p:menuitem value="Remesas por Agente" action="/reports/remesas-by-agente?faces-redirect=true"/>
@@ -56,7 +56,7 @@
                             </p:submenu>
 
                             <f:facet name="options">
-                                <p:commandLink value="#{userLogged.username}" action="#{userController.logout()}"/>
+                                <p:commandLink value="#{userLogged.userName}" action="#{userController.logout()}"/>
                             </f:facet>
                         </p:menubar>
                     </h:form>

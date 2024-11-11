@@ -24,8 +24,8 @@
             <h:outputLabel for="admin" value="Privilegios:" />
             <p:selectOneMenu id="admin" value="#{userController.user.admin}" required="true">
                 <f:selectItem itemLabel="Seleccione tipo" itemValue="" noSelectionOption="true" />
-                <f:selectItem itemLabel="Administrador" itemValue="1" />
-                <f:selectItem itemLabel="Cliente" itemValue="0" />
+                <f:selectItem itemLabel="Administrador" itemValue="true" />
+                <f:selectItem itemLabel="Cliente" itemValue="false" />
             </p:selectOneMenu>
 
         </h:panelGrid>

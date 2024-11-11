@@ -41,7 +41,7 @@ public class RemesaController implements Serializable {
                 if(userLogged.isAdmin()) {
                     this.remesas = remesaService.getAll();
                 }else{
-                    this.remesas = remesaService.getByUser(userLogged.getUsername());
+                    this.remesas = remesaService.getByUser(userLogged.getUserName());
                 }
             }
         } catch (Exception e) {

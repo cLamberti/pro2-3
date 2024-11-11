@@ -34,6 +34,27 @@ public class UserController implements Serializable {
         loadUsers();
     }
 
+    public String login(){
+        UserService userService = new UserService();
+        User userCheck = userService.checkCredentials(getUser().getUserName(), getUser().getPassword());
+        if(userCheck!=null){
+            this.user = userCheck;
+            FacesContext.getCurrentInstance().getExternalContext()
+                    .getSessionMap().put("userLogged", this.user);
+            return "/home?faces-redirect=true";
+        }else{
+            FacesMessage fMsg=new FacesMessage("Usuario o contraseña invalido");
+            FacesContext.getCurrentInstance().addMessage(null, fMsg);
+            return null;
+        }
+
+    }
+    public String logout(){
+        FacesContext.getCurrentInstance().getExternalContext()
+                .getSessionMap().remove("userLogged");
+        return "/index?faces-redirect=true";
+    }
+
     public void loadUsers() {
         try {
             this.users = userService.getAll();
@@ -93,29 +114,6 @@ public class UserController implements Serializable {
     public String backList(){
         loadUsers();
         return "/usuario/list-usuario?faces-redirect=true";
-    }
-
-
-
-    public String login(){
-        UserService userService = new UserService();
-        User userCheck = userService.checkCredentials(getUser().getUserName(), getUser().getPassword());
-        if(userCheck!=null){
-            this.user = userCheck;
-            FacesContext.getCurrentInstance().getExternalContext()
-                    .getSessionMap().put("userLogged", this.user);
-            return "/home?faces-redirect=true";
-        }else{
-            FacesMessage fMsg=new FacesMessage("Usuario o contraseña invalido");
-            FacesContext.getCurrentInstance().addMessage(null, fMsg);
-            return null;
-        }
-
-    }
-    public String logout(){
-        FacesContext.getCurrentInstance().getExternalContext()
-                .getSessionMap().remove("userLogged");
-        return "/index?faces-redirect=true";
     }
 
     public User getUser() {

@@ -36,10 +36,10 @@ CREATE TABLE empresas (
 
 -- CREACION TABLA USUARIOS
 CREATE TABLE users (
-                       username varchar(20) NOT NULL,
+                       userName varchar(20) NOT NULL,
                        password varchar(12) NOT NULL,
                        admin BOOLEAN NOT NULL,
-                       PRIMARY KEY (username)
+                       PRIMARY KEY (userName)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 -- CREACION TABLA REMESAS
@@ -56,10 +56,10 @@ CREATE TABLE remesas (
                          FOREIGN KEY (idAgente) REFERENCES agentes(id) ON DELETE CASCADE ON UPDATE CASCADE,
                          FOREIGN KEY (idCamion) REFERENCES camiones(licensePlate) ON DELETE CASCADE ON UPDATE CASCADE,
                          FOREIGN KEY (idEmpresa) REFERENCES empresas(companyName) ON DELETE CASCADE ON UPDATE CASCADE,
-                         FOREIGN KEY (idUser) REFERENCES users(username) ON DELETE CASCADE ON UPDATE CASCADE
+                         FOREIGN KEY (idUser) REFERENCES users(userName) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
-insert into users(username, password, admin) values("admin" , "admin" , "1");
-insert into users(username, password, admin) values("Santiago" , "1234" , "0")
+insert into users(userName, password, admin) values("admin" , "admin" , "1");
+insert into users(userName, password, admin) values("Santiago" , "1234" , "0")
 
 
