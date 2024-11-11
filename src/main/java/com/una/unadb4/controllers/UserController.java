@@ -37,9 +37,8 @@ public class UserController implements Serializable {
         UserService userService = new UserService();
         User userCheck = userService.checkCredentials(getUser().getUserName(), getUser().getPassword());
         if(userCheck!=null){
-            this.user = userCheck;
             FacesContext.getCurrentInstance().getExternalContext()
-                    .getSessionMap().put("userLogged", this.user);
+                    .getSessionMap().put("userLogged", userCheck);
             return "/home?faces-redirect=true";
         }else{
             FacesMessage fMsg=new FacesMessage("Usuario o contraseña invalido");

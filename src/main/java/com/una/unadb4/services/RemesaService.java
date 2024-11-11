@@ -102,7 +102,6 @@ public class RemesaService extends Service<Remesa> {
                 re.setDate(remesa.getDate());
                 re.setTime(remesa.getTime());
                 re.setStatus(remesa.getStatus());
-                re.setAgente(remesa.getAgente());
                 re.setCamion(remesa.getCamion());
                 re.setEmpresa(remesa.getEmpresa());
                 re.setUser(remesa.getUser());

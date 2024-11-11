@@ -30,7 +30,6 @@ public class EmpresaController implements Serializable {
         this.empresaService = new EmpresaService();
         this.empresa = new Empresa();
         this.logger = Logger.getLogger(this.getClass().getName());
-        this.empresaService.getAll();
         loadEmpresas(); // Carga inicial de todos los camiones
     }
 
