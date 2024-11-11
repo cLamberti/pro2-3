@@ -42,10 +42,6 @@ public class User implements Serializable {
         return admin;
     }
 
-    /*public void setAdmin(boolean admin) {
-        this.admin = admin;
-    }*/
-
     public void setAdmin(Boolean admin) {  // Cambiado a Boolean
         this.admin = admin;
     }

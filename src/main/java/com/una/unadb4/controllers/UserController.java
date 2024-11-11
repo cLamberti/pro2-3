@@ -1,6 +1,5 @@
 package com.una.unadb4.controllers;
 
-import com.una.unadb4.models.Empresa;
 import com.una.unadb4.models.User;
 import com.una.unadb4.services.UserService;
 import jakarta.enterprise.context.SessionScoped;
@@ -69,7 +68,7 @@ public class UserController implements Serializable {
     public String saveUser() {
         try {
             userService.store(user);
-            addMessage(FacesMessage.SEVERITY_INFO, "Éxito", "Usuario guardado correctamente.");
+            addMessage(FacesMessage.SEVERITY_INFO, "Éxito", "User guardado correctamente.");
             user = new User();
             loadUsers();
         } catch (Exception e) {
@@ -123,7 +122,7 @@ public class UserController implements Serializable {
         return user;
     }
 
-    public void setUser(Empresa empresa) {
+    public void setUser(User user) {
         this.user = user;
     }
 
