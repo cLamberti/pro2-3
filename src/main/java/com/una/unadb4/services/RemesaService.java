@@ -1,6 +1,5 @@
 package com.una.unadb4.services;
 
-import com.una.unadb4.models.Agente;
 import com.una.unadb4.models.Remesa;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
@@ -102,6 +101,7 @@ public class RemesaService extends Service<Remesa> {
                 re.setDate(remesa.getDate());
                 re.setTime(remesa.getTime());
                 re.setStatus(remesa.getStatus());
+                re.setAgente(remesa.getAgente());
                 re.setCamion(remesa.getCamion());
                 re.setEmpresa(remesa.getEmpresa());
                 re.setUser(remesa.getUser());

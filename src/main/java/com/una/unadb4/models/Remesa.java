@@ -26,16 +26,28 @@ public class Remesa implements Serializable {
     @Column(name = "estado")
     private String status; // "Solicitada", "Autorizada", etc.
 
-
+    @OneToOne
+    @JoinColumn(name = "idAgente")
+    private Agente agente;
 
     @OneToOne
+    @JoinColumn(name = "idCamion")
     private Camion camion;
 
     @OneToOne
+    @JoinColumn(name = "idEmpresa")
     private Empresa empresa;
 
     @OneToOne
+    @JoinColumn(name = "idUser")
     private User user;
+
+    public Remesa() {
+        this.agente = new Agente();
+        this.camion = new Camion();
+        this.empresa = new Empresa();
+        this.user = new User();
+    }
 
     public int getId() {
         return id;
@@ -69,7 +81,13 @@ public class Remesa implements Serializable {
         this.status = status;
     }
 
+    public Agente getAgente() {
+        return agente;
+    }
 
+    public void setAgente(Agente agente) {
+        this.agente = agente;
+    }
 
     public Camion getCamion() {
         return camion;
@@ -95,6 +113,5 @@ public class Remesa implements Serializable {
         this.user = user;
     }
 }
-    // Getters y Setters
 
 

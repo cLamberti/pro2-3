@@ -38,6 +38,7 @@ public class RemesaController implements Serializable {
     public RemesaController() {
         userLogged = (User) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("userLogged");
         this.remesaService = new RemesaService();
+        this.remesa = new Remesa();
         this.logger = Logger.getLogger(this.getClass().getName());
         this.remesas = new ArrayList<>();
         //loadRemesas();
@@ -93,6 +94,10 @@ public class RemesaController implements Serializable {
 
     public String saveRemesa() {
         try {
+            this.remesa.setAgente(agentes.stream().filter(c -> c.getId().equals(this.remesa.getAgente().getId())).findFirst().get());
+            this.remesa.setEmpresa(empresas.stream().filter(c -> c.getCompanyName().equals(this.remesa.getEmpresa().getCompanyName())).findFirst().get());
+            this.remesa.setCamion(camiones.stream().filter(c -> c.getLicensePlate().equals(this.remesa.getCamion().getLicensePlate())).findFirst().get());
+            this.remesa.setUser(userLogged);
             remesaService.store(remesa);
             addMessage(FacesMessage.SEVERITY_INFO, "Éxito", "Remesa guardado correctamente.");
             remesa = new Remesa();
@@ -159,6 +164,7 @@ public class RemesaController implements Serializable {
     public void setRemesas(List<Remesa> remesas) {
         this.remesas = remesas;
     }
+
 
     public List<Camion> getCamiones() {
         return camiones;

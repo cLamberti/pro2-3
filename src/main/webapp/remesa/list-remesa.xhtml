@@ -49,6 +49,13 @@
                 <h:outputText value="#{remesaT.user}" />
             </p:column>
 
+            <p:column headerText="Agregar Agentes">
+                <p:commandButton value="AgregarAgentes"
+                                 action="#{remesaController.setAgentes(remesa.agente)}"
+                                 icon="pi pi-user-edit"/>
+            </p:column>
+
+
             <p:column headerText="Acciones">
                 <p:commandButton value="Eliminar"
                                  action="#{remesaController.deleteRemesa(remesaT.id)}"
