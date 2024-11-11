@@ -99,7 +99,7 @@ public class UserController implements Serializable {
 
     public String login(){
         UserService userService = new UserService();
-        User userCheck = userService.checkCredentials(getUser().getUsername(), getUser().getPassword());
+        User userCheck = userService.checkCredentials(getUser().getUserName(), getUser().getPassword());
         if(userCheck!=null){
             this.user = userCheck;
             FacesContext.getCurrentInstance().getExternalContext()
@@ -119,9 +119,9 @@ public class UserController implements Serializable {
     }
 
     public User getUser() {
-        if(user==null){
-            user = new User();
-        }
+        //if(user==null){
+        //    user = new User();
+        //}
         return user;
     }
 

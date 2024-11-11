@@ -29,13 +29,13 @@ public class UserService extends Service<User>{
         }
     }
 
-    public User checkCredentials(String username, String password) {
+    public User checkCredentials(String userName, String password) {
         EntityManager em = Persistence.createEntityManagerFactory(persistence).createEntityManager();
         User user = null;
         try {
             em.getTransaction().begin();
-            user = em.createQuery("SELECT r FROM users r WHERE r.userName = :username AND r.password = :password", User.class)
-                    .setParameter("username", username)
+            user = em.createQuery("SELECT r FROM users r WHERE r.userName = :userName AND r.password = :password", User.class)
+                    .setParameter("userName", userName)
                     .setParameter("password", password)
                     .getSingleResult();
             em.getTransaction().commit();

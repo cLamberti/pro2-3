@@ -18,7 +18,7 @@
         <p:dataTable id="usuariosTable" value="#{userController.users}" var="usuarioT" striped="true" hover="true">
 
             <p:column headerText="Nombre">
-                <h:outputText value="#{usuarioT.username}" />
+                <h:outputText value="#{usuarioT.userName}" />
             </p:column>
 
             <p:column headerText="Direccion">
@@ -36,7 +36,7 @@
             </p:column>
             <p:column headerText="Acciones">
                 <p:commandButton value="Eliminar"
-                                 action="#{userController.deleteUser(usuarioT.username)}"
+                                 action="#{userController.deleteUser(usuarioT.userName)}"
                                  update="empresasTable"
                                  oncomplete="PF('dlg').hide();"
                                  icon="pi pi-trash"
@@ -48,7 +48,7 @@
         <p:dialog header="Confirmación" widgetVar="dlg" modal="true" closable="false">
             <h:outputText value="¿Estás seguro de que deseas eliminar este usuario?" />
             <p:commandButton value="Sí"
-                             action="#{userController.deleteUser(usuarioT.username)}"
+                             action="#{userController.deleteUser(usuarioT.userName)}"
                              update="empresasTable"
                              oncomplete="PF('dlg').hide();" />
             <p:commandButton value="No" onclick="PF('dlg').hide();" type="button" />
