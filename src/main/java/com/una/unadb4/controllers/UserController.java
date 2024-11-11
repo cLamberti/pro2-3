@@ -1,23 +1,101 @@
 package com.una.unadb4.controllers;
 
+import com.una.unadb4.models.Empresa;
 import com.una.unadb4.models.User;
 import com.una.unadb4.services.UserService;
-import jakarta.enterprise.context.RequestScoped;
+import jakarta.enterprise.context.SessionScoped;
+import jakarta.enterprise.inject.Model;
 import jakarta.faces.application.FacesMessage;
-import jakarta.inject.Named;
 import jakarta.faces.context.FacesContext;
+import jakarta.faces.view.ViewScoped;
+import jakarta.inject.Named;
 
-@Named
-@RequestScoped
-public class UserController {
+import java.io.IOException;
+import java.io.Serializable;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+//@Named
+//@RequestScoped
+@Model
+@SessionScoped
+public class UserController implements Serializable {
     private User user;
+    private List<User> users;
+    private final UserService userService; // Servicio para operaciones CRUD
+    private final Logger logger;
 
-    public User getUser() {
-        if(user==null){
-            user = new User();
-        }
-        return user;
+    public UserController() throws Exception { // HOLA
+        this.userService = new UserService();
+        this.user = new User();
+        this.logger = Logger.getLogger(this.getClass().getName());
+        this.userService.getAll();
+        loadUsers();
     }
+
+    public void loadUsers() {
+        try {
+            this.users = userService.getAll();
+            System.out.println(this.users);
+            //addMessage(FacesMessage.SEVERITY_ERROR, "Error", "Algo"+this.users.get(0).getBrand());
+        } catch (Exception e) {
+            logger.log(Level.SEVERE, "Error al cargar el usuario", e);
+            addMessage(FacesMessage.SEVERITY_ERROR, "Error", "No se pudieron cargar los usuarios.");
+        }
+    }
+
+    public String saveUser() {
+        try {
+            userService.store(user);
+            addMessage(FacesMessage.SEVERITY_INFO, "Éxito", "Usuario guardado correctamente.");
+            user = new User();
+            loadUsers();
+        } catch (Exception e) {
+            logger.log(Level.SEVERE, "Error al guardar el Usuario", e);
+            addMessage(FacesMessage.SEVERITY_ERROR, "Error", "No se pudo guardar el Usuario.");
+        }
+        return null;
+    }
+
+    public String updateUsuario() {
+        try {
+            userService.update(user);
+            addMessage(FacesMessage.SEVERITY_INFO, "Éxito", "Usuario actualizado correctamente.");
+            return this.backList();
+        } catch (Exception e) {
+            logger.log(Level.SEVERE, "Error al actualizar el Usuario", e);
+            addMessage(FacesMessage.SEVERITY_ERROR, "Error", "No se pudo actualizar el Usuario.");
+        }
+        return null;
+    }
+
+    public void deleteUser(String id) {
+        try {
+            userService.delete(id);
+            addMessage(FacesMessage.SEVERITY_INFO, "Éxito", "Usuario eliminado correctamente.");
+            loadUsers(); // Recarga la lista
+        } catch (Exception e) {
+            logger.log(Level.SEVERE, "Error al eliminar el Usuario", e);
+            addMessage(FacesMessage.SEVERITY_ERROR, "Error", "No se pudo eliminar el Usuario.");
+        }
+    }
+
+    public String setEdit(User user) {
+        this.user = user;
+        return "update-usuario?faces-redirect=true";
+    }
+
+    private void addMessage(FacesMessage.Severity severity, String summary, String detail) {
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(severity, summary, detail));
+    }
+
+    public String backList(){
+        loadUsers();
+        return "/usuario/list-usuario?faces-redirect=true";
+    }
+
+
 
     public String login(){
         UserService userService = new UserService();
@@ -38,5 +116,24 @@ public class UserController {
         FacesContext.getCurrentInstance().getExternalContext()
                 .getSessionMap().remove("userLogged");
         return "/index?faces-redirect=true";
+    }
+
+    public User getUser() {
+        if(user==null){
+            user = new User();
+        }
+        return user;
+    }
+
+    public void setUser(Empresa empresa) {
+        this.user = user;
+    }
+
+    public List<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<User> users) {
+        this.users = users;
     }
 }
