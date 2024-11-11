@@ -4,51 +4,51 @@
       xmlns:p="http://primefaces.org/ui">
 
 <h:head>
-    <title>Listado de Empresas</title>
+    <title>Listado de Usuarios</title>
 </h:head>
 <h:body>
     <h:form>
 
         <h:panelGrid columns="2">
-            <h:outputLabel value="Lista de Empresas" for="empresasTable" />
-            <p:commandButton value="Actualizar" action="#{empresaController.loadEmpresas()}" update="empresasTable" icon="pi pi-refresh"/>
+            <h:outputLabel value="Lista de Usuarios" for="usuariosTable" />
+            <p:commandButton value="Actualizar" action="#{userController.loadUsers()}" update="usuariosTable" icon="pi pi-refresh"/>
         </h:panelGrid>
         <p:commandButton value="Volver" immediate="true" action="/home?faces-redirect=true" icon="pi pi-arrow-left"/>
 
-        <p:dataTable id="empresasTable" value="#{empresaController.empresas}" var="empresaT" striped="true" hover="true">
+        <p:dataTable id="usuariosTable" value="#{userController.users}" var="usuarioT" striped="true" hover="true">
 
             <p:column headerText="Nombre">
-                <h:outputText value="#{empresaT.companyName}" />
+                <h:outputText value="#{usuarioT.username}" />
             </p:column>
 
             <p:column headerText="Direccion">
-                <h:outputText value="#{empresaT.address}" />
+                <h:outputText value="#{usuarioT.password}" />
             </p:column>
 
-            <p:column headerText="Contacto">
-                <h:outputText value="#{empresaT.contact}" />
+            <p:column headerText="Privilegios">
+                <h:outputText value="#{usuarioT.admin}" />
             </p:column>
 
             <p:column headerText="Editar">
                 <p:commandButton value="Editar"
-                                 action="#{empresaController.setEdit(empresaT)}"
+                                 action="#{userController.setEdit(usuarioT)}"
                                  icon="pi pi-user-edit"/>
             </p:column>
             <p:column headerText="Acciones">
                 <p:commandButton value="Eliminar"
-                                 action="#{empresaController.deleteEmpresa(empresaT.companyName)}"
+                                 action="#{userController.deleteUser(usuarioT.username)}"
                                  update="empresasTable"
                                  oncomplete="PF('dlg').hide();"
                                  icon="pi pi-trash"
-                                 onclick="return confirm('¿Estás seguro de que deseas eliminar esta empresa?');" />
+                                 onclick="return confirm('¿Estás seguro de que deseas eliminar este usuario?');" />
             </p:column>
 
         </p:dataTable>
 
         <p:dialog header="Confirmación" widgetVar="dlg" modal="true" closable="false">
-            <h:outputText value="¿Estás seguro de que deseas eliminar esta empresa?" />
+            <h:outputText value="¿Estás seguro de que deseas eliminar este usuario?" />
             <p:commandButton value="Sí"
-                             action="#{empresaController.deleteEmpresa(empresaT.companyName)}"
+                             action="#{userController.deleteUser(usuarioT.username)}"
                              update="empresasTable"
                              oncomplete="PF('dlg').hide();" />
             <p:commandButton value="No" onclick="PF('dlg').hide();" type="button" />
