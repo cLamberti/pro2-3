@@ -45,7 +45,7 @@ public class AgenteController implements Serializable {
             //addMessage(FacesMessage.SEVERITY_ERROR, "Error", "Algo"+this.agentes.get(0).getBrand());
         } catch (Exception e) {
             logger.log(Level.SEVERE, "Error al cargar los agentes", e);
-            addMessage(FacesMessage.SEVERITY_ERROR, "Error", "No se pudieron cargar los agentesf.");
+            addMessage(FacesMessage.SEVERITY_ERROR, "Error", "No se pudieron cargar los agentes.");
         }
     }
 
@@ -73,12 +73,22 @@ public class AgenteController implements Serializable {
         return null;
     }
 
-    public String getPhotoAsBase64(Agente agentePhoto) {
-        if (agentePhoto.getPhoto() != null) {
-            return Base64.getEncoder().encodeToString(agentePhoto.getPhoto());
+    public String getPhotoAsBase64(Agente agente) {
+        if (agente.getPhoto() != null && agente.getPhoto().length > 0) {
+            return "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(agente.getPhoto());
+        } else {
+            // Retorna una imagen predeterminada si no hay foto
+            return "data:image/jpeg;base64," + getDefaultPhoto();
         }
-        return null;
     }
+
+    private String getDefaultPhoto() {
+        // Inserta aquí la codificación Base64 de una imagen predeterminada
+        String defaultPhotoBase64 = "BASE64_STRING_DE_IMAGEN_DEFAULT";
+        return defaultPhotoBase64;
+    }
+
+
 
     // Método para actualizar un agente existente
     public String updateAgente() {

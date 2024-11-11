@@ -56,7 +56,7 @@
                     </p:submenu>
 
                     <f:facet name="options">
-                        <p:commandLink value="#{userLogged.username}" action="#{userController.logout()}"/>
+                        <p:commandLink value="#{userLogged.userName}" action="#{userController.logout()}"/>
                     </f:facet>
                 </p:menubar>
             </h:form>
@@ -90,8 +90,14 @@
             </p:column>
 
             <p:column headerText="Foto">
-                <p:graphicImage value="data:image/jpeg;base64,#{agenteController.getPhotoAsBase64(agenteT)}" />
+                <p:graphicImage
+                        value="#{agenteController.getPhotoAsBase64(agenteT)}"
+                        alt="Foto de #{agenteT.name}"
+                        rendered="#{not empty agenteT.photo}" />
+                <h:outputText value="Sin foto" rendered="#{empty agenteT.photo}" />
             </p:column>
+
+
 
 
             <p:column headerText="Nombre Foto">
