@@ -46,8 +46,8 @@
                         <p:menuitem value="Nueva" action="/empresa/add-empresa?faces-redirect=true"/>
                     </p:submenu>
                     <p:submenu label="Usuarios" rendered="#{userLogged.admin}"> <!--NO TE OLVIDES-->
-                        <p:menuitem value="Listar" action="/empresa/list-empresa?faces-redirect=true"/>
-                        <p:menuitem value="Nueva" action="/empresa/add-empresa?faces-redirect=true"/>
+                        <p:menuitem value="Listar" action="/empresa/list-usuario?faces-redirect=true"/>
+                        <p:menuitem value="Nueva" action="/empresa/add-usuario?faces-redirect=true"/>
                     </p:submenu>
                     <p:submenu label="Informes" rendered="#{userLogged.admin}">
                         <p:menuitem value="Remesas por Agente" action="/reports/remesas-by-agente?faces-redirect=true"/>
@@ -100,7 +100,7 @@
     </div> <!--fin del contenido-->
         <div id="footerPage">
             <hr/>
-            <p>&copy;2024 Remmitance Trucks CR. Todos los derechos reservados</p>
+            <p>&copy;2024 Remmitance Trucks CR. Todos los derechos reservados</p><p:commandLink value="Sobre Nosotros" action="/aboutUs/aboutUs?faces-redirect=true"/>
         </div>
     </div>
 </h:body>

@@ -12,15 +12,16 @@ import jakarta.inject.Named;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.file.UploadedFile;
 
-import java.io.IOException;
-import java.io.Serializable;
+import java.io.*;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.Base64;
 
 @Model
-@SessionScoped
+@ViewScoped
 public class AgenteController implements Serializable {
 
     private Agente agente; // Camión actual en el formulario
@@ -28,77 +29,85 @@ public class AgenteController implements Serializable {
     private final AgenteService agenteService; // Servicio para operaciones CRUD
     private final Logger logger;
     private String tempFilename;
-    private byte[] tempFile;
+    private UploadedFile tempFile;
 
     public AgenteController() throws Exception { // HOLA
+        this.agentes = new ArrayList<>();
         this.agenteService = new AgenteService();
-        this.agente = new Agente();
         this.logger = Logger.getLogger(this.getClass().getName());
-        this.agenteService.getAll();
         loadAgentes();
     }
+    public UploadedFile getTempFile() {return tempFile;}
+
+    public void setTempFile(UploadedFile tempFile) {this.tempFile = tempFile;}
 
     public void loadAgentes() {
+        logger.info("Loading Agentes");
+        this.agentes.clear();
         try {
             this.agentes = agenteService.getAll();
-            System.out.println(this.agentes);
-            //addMessage(FacesMessage.SEVERITY_ERROR, "Error", "Algo"+this.agentes.get(0).getBrand());
+            this.setOnAgent();
         } catch (Exception e) {
             logger.log(Level.SEVERE, "Error al cargar los agentes", e);
-            addMessage(FacesMessage.SEVERITY_ERROR, "Error", "No se pudieron cargar los agentes.");
+            addMessage(e.getMessage());
         }
     }
 
-    public void handleUpload(FileUploadEvent event){
-        this.tempFilename=event.getFile().getFileName();
-        this.tempFile=event.getFile().getContent();
-        addMessage(FacesMessage.SEVERITY_ERROR, "INFO", "Archivo "+tempFilename+" subido");
-    }
 
     // Método para guardar un nuevo agente
-    public String saveAgente() {
+    public void saveAgente(Agente agente) {
+        if(this.tempFile!=null){
+            agente.setPhoto(this.tempFile.getContent());
+            agente.setFilename(this.tempFile.getFileName());
+        }
+        logger.info("Saving Agente: " + agente.getId());
         try {
-            if(this.tempFile!=null){
-                agente.setPhoto(this.tempFile);
-                agente.setFilename(this.tempFilename);
-            }
             agenteService.store(agente);
-            addMessage(FacesMessage.SEVERITY_INFO, "Éxito", "Agente guardado correctamente.");
-            agente = new Agente();
-            loadAgentes();
+            addMessage("Agente guardado correctamente.");
         } catch (Exception e) {
             logger.log(Level.SEVERE, "Error al guardar el agente", e);
-            addMessage(FacesMessage.SEVERITY_ERROR, "Error", "No se pudo guardar el agente.");
-        }
-        return null;
-    }
-
-    public String getPhotoAsBase64(Agente agente) {
-        if (agente.getPhoto() != null && agente.getPhoto().length > 0) {
-            return "data:image/jpeg;base64," + Base64.getEncoder().encodeToString(agente.getPhoto());
-        } else {
-            // Retorna una imagen predeterminada si no hay foto
-            return "data:image/jpeg;base64," + getDefaultPhoto();
+            this.addMessage(e.getMessage());
         }
     }
+    public void setOnAgent (){
+        String path = FacesContext.getCurrentInstance().getExternalContext().getRealPath("/") +
+                File.separatorChar + "resources" + File.separatorChar + "agents" + File.separatorChar;
+        this.agentes.forEach(new Consumer<Agente>() {
+            @Override
+                public void accept(Agente agente) {
+                    if (!agente.getFilename().isEmpty()) {
+                        String filePath = path + File.separatorChar + agente.getFilename();
+                        if (!new File(filePath).exists()) {
+                            try {
+                                FileOutputStream out = new FileOutputStream(new File(filePath));
+                                InputStream in = new ByteArrayInputStream(agente.getPhoto());
+                                int r = 0;
+                                while ((r = in.read()) >=0) {
+                                    out.write(r);
+                                }
+                                out.flush();
+                                out.close();
+                            } catch (Exception e) {
+                                throw new RuntimeException(e);
+                            }
+                        }
+                    }
 
-    private String getDefaultPhoto() {
-        // Inserta aquí la codificación Base64 de una imagen predeterminada
-        String defaultPhotoBase64 = "BASE64_STRING_DE_IMAGEN_DEFAULT";
-        return defaultPhotoBase64;
+            }
+        });
     }
 
 
 
     // Método para actualizar un agente existente
-    public String updateAgente() {
+    public String updateAgente(Agente agente) {
         try {
             agenteService.update(agente);
-            addMessage(FacesMessage.SEVERITY_INFO, "Éxito", "agente actualizado correctamente.");
+            addMessage("Agente actualizado correctamente.");
             return this.backList();
         } catch (Exception e) {
             logger.log(Level.SEVERE, "Error al actualizar el agente", e);
-            addMessage(FacesMessage.SEVERITY_ERROR, "Error", "No se pudo actualizar el agente.");
+            addMessage(e.getMessage());
         }
         return null;
     }
@@ -107,11 +116,11 @@ public class AgenteController implements Serializable {
     public void deleteAgente(String id) {
         try {
             agenteService.delete(id);
-            addMessage(FacesMessage.SEVERITY_INFO, "Éxito", "Agente eliminado correctamente.");
+            addMessage("Agente eliminado correctamente.");
             loadAgentes(); // Recarga la lista de agentes
         } catch (Exception e) {
             logger.log(Level.SEVERE, "Error al eliminar el agente", e);
-            addMessage(FacesMessage.SEVERITY_ERROR, "Error", "No se pudo eliminar el agente.");
+            addMessage(e.getMessage());
         }
     }
 
@@ -127,8 +136,9 @@ public class AgenteController implements Serializable {
 
 
     // Método para mostrar mensajes en la interfaz
-    private void addMessage(FacesMessage.Severity severity, String summary, String detail) {
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(severity, summary, detail));
+    private void addMessage(String msg) {
+        FacesMessage fMsg = new FacesMessage();
+        FacesContext.getCurrentInstance().addMessage(null, fMsg);
     }
 
     // Getters y Setters

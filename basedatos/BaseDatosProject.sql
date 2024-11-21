@@ -60,14 +60,12 @@ CREATE TABLE remesas (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 CREATE TABLE remesa_agente (
-    idAgente varchar(11) NOT NULL,
-    idRemesa varchar(20) NOT NULL,
-    PRIMARY KEY (idAgente, idRemesa),
-    FOREIGN KEY (idAgente) REFERENCES agentes(id) ON DELETE CASCADE ON UPDATE CASCADE,
-    FOREIGN KEY (idRemesa) REFERENCES remesas(id) ON DELETE CASCADE ON UPDATE CASCADE
+                               idAgente varchar(11) NOT NULL,
+                               idRemesa varchar(20) NOT NULL,
+                               PRIMARY KEY (idAgente, idRemesa),
+                               FOREIGN KEY (idAgente) REFERENCES agentes(id) ON DELETE CASCADE ON UPDATE CASCADE,
+                               FOREIGN KEY (idRemesa) REFERENCES remesas(id) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 insert into users(userName, password, admin) values("admin" , "admin" , "1");
 insert into users(userName, password, admin) values("Santiago" , "1234" , "0")
-
-
